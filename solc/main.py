@@ -1,7 +1,8 @@
+from __future__ import absolute_import
+
 import functools
 import json
 import re
-from io import BytesIO
 
 from .exceptions import (
     SolcError,
@@ -9,12 +10,6 @@ from .exceptions import (
 
 from .utils.formatting import (
     add_0x_prefix,
-)
-from .utils.types import (
-    is_string,
-)
-from .utils.string import (
-    coerce_return_to_text,
 )
 from .utils.filesystem import (
     is_executable_available,

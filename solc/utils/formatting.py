@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 from .string import (
     force_bytes,
     force_text,
