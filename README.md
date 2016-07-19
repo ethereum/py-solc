@@ -37,7 +37,7 @@ pip install py-solc
         },
     },
 }
->>> compile_source(["/path/to/Foo.sol", "/path/to/Bar.sol"])
+>>> compile_files(["/path/to/Foo.sol", "/path/to/Bar.sol"])
 {
     'Foo': {
         'abi': [{'inputs': [], 'type': 'constructor'}],
