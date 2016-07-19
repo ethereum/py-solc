@@ -6,13 +6,9 @@ sudo: required
 before_install:
   - travis_retry sudo add-apt-repository -y ppa:ethereum/ethereum
   - travis_retry sudo apt-get update
-  - travis_retry sudo apt-get install -y ethereum
-  - mkdir -p ~/.ethash
-  - geth makedag 0 ~/.ethash
+  - travis_retry sudo apt-get install -y solc
 cache:
   pip: true
-  directories:
-    - ~/.ethash
 env:
   matrix:
     - TOX_ENV=py27
