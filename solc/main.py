@@ -121,3 +121,17 @@ def compile_files(source_files, output_values=ALL_OUTPUT_VALUES, **kwargs):
 
     contracts = _parse_compiler_output(stdoutdata)
     return contracts
+
+
+def link_code(unliked_data, libraries):
+    libraries_arg = ','.join((
+        ':'.join((lib_name, lib_address))
+        for lib_name, lib_address in libraries.items()
+    ))
+    stdoutdata, stderrdata = solc_wrapper(
+        stdin_bytes=unliked_data,
+        link=True,
+        libraries=libraries_arg,
+    )
+
+    return stdoutdata.strip()
