@@ -61,6 +61,9 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
     if optimize_runs is not None:
         command.extend(('--optimize-runs', str(optimize_runs)))
 
+    if link:
+        command.append('--link')
+
     if libraries is not None:
         command.extend(('--libraries', libraries))
 
@@ -78,9 +81,6 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
 
     if source_files is not None:
         command.extend(source_files)
-
-    if link:
-        command.append('--link')
 
     #
     # Output configuration
