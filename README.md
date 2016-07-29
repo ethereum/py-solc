@@ -5,12 +5,14 @@
 [![PyPi downloads](https://pypip.in/d/py-solc/badge.png)](https://pypi.python.org/pypi/py-solc)
    
 
-Python wrapper around the `solc` solidity compiler.
+Python wrapper around the `solc` Solidity compiler.
 
 
 # Dependency
 
 This library requires the `solc` executable to be present.
+
+solc 0.3.5 or newer is required. [solc installation instructions](http://solidity.readthedocs.io/en/latest/installing-solidity.html)
 
 
 # Quickstart
