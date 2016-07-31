@@ -43,7 +43,7 @@ def _parse_compiler_output(stdoutdata):
 
     output = json.loads(stdoutdata)
 
-    if not "contracts" in output:
+    if "contracts" not in output:
         # {'sources': {}, 'version': 'xxx'}
         # solc did not pick up any contracts
         raise ContractsNotFound(output)
