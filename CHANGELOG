@@ -1,3 +1,8 @@
+0.3.0
+-----
+
+- Graceful failure mode when no contracts are found in the compiler output.
+
 0.2.0
 -----
 
