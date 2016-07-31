@@ -6,6 +6,7 @@ import re
 
 from .exceptions import (
     SolcError,
+    ContractsNotFound,
 )
 
 from .utils.formatting import (
@@ -39,7 +40,15 @@ def get_solc_version():
 
 
 def _parse_compiler_output(stdoutdata):
-    contracts = json.loads(stdoutdata)['contracts']
+
+    output = json.loads(stdoutdata)
+
+    if "contracts" not in output:
+        # {'sources': {}, 'version': 'xxx'}
+        # solc did not pick up any contracts
+        raise ContractsNotFound(output)
+
+    contracts = output['contracts']
 
     for _, data in contracts.items():
         data['abi'] = json.loads(data['abi'])
