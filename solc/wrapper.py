@@ -44,7 +44,7 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
                  devdoc=None,
                  formal=None,
                  success_return_code=0):
-    command = ['solc']
+    command = [solc_binary]
 
     if help:
         command.append('--help')
