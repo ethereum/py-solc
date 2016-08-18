@@ -1,3 +1,11 @@
+0.4.0
+-----
+
+- Fix bug where wrapper didn't use the provided alternative solc binary path.
+- Fix issue where compile result solc version wouldn't match actual compiler
+  version if custom compiler path was used.
+- Use `gevent`
+
 0.3.0
 -----
 
