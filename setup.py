@@ -23,7 +23,9 @@ setup(
     url='https://github.com/pipermerriam/py-solc',
     include_package_data=True,
     py_modules=['solc'],
-    install_requires=[],
+    install_requires=[
+        "gevent>=1.1.2",
+    ],
     license="MIT",
     zip_safe=False,
     keywords='ethereum solidity solc',
