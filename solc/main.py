@@ -27,8 +27,9 @@ version_regex = re.compile('Version: ([0-9]+\.[0-9]+\.[0-9]+(-[a-f0-9]+)?)')
 is_solc_available = functools.partial(is_executable_available, SOLC_BINARY)
 
 
-def get_solc_version():
-    stdoutdata, stderrdata = solc_wrapper(version=True)
+def get_solc_version(**kwargs):
+    kwargs['version'] = True
+    stdoutdata, stderrdata = solc_wrapper(**kwargs)
     version_match = version_regex.search(stdoutdata)
     if version_match is None:
         raise SolcError(
@@ -39,7 +40,7 @@ def get_solc_version():
     return version_match.groups()[0]
 
 
-def _parse_compiler_output(stdoutdata):
+def _parse_compiler_output(stdoutdata, compiler_version):
 
     output = json.loads(stdoutdata)
 
@@ -54,8 +55,6 @@ def _parse_compiler_output(stdoutdata):
         data['abi'] = json.loads(data['abi'])
 
     sorted_contracts = sorted(contracts.items(), key=lambda c: c[0])
-
-    compiler_version = get_solc_version()
 
     return {
         contract_name: {
@@ -106,7 +105,9 @@ def compile_source(source, output_values=ALL_OUTPUT_VALUES, **kwargs):
         **kwargs
     )
 
-    contracts = _parse_compiler_output(stdoutdata)
+    compiler_version = get_solc_version(version=True, **kwargs)
+
+    contracts = _parse_compiler_output(stdoutdata, compiler_version)
     return contracts
 
 
@@ -128,7 +129,9 @@ def compile_files(source_files, output_values=ALL_OUTPUT_VALUES, **kwargs):
         **kwargs
     )
 
-    contracts = _parse_compiler_output(stdoutdata)
+    compiler_version = get_solc_version(version=True, **kwargs)
+
+    contracts = _parse_compiler_output(stdoutdata, compiler_version)
     return contracts
 
 
