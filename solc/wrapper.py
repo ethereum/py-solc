@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
-import subprocess
+from gevent import subprocess
+
 import textwrap
 
 from .exceptions import (
