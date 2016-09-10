@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+import os
+
 from gevent import subprocess
 
 import textwrap
@@ -12,7 +14,7 @@ from .utils.string import (
 )
 
 
-SOLC_BINARY = 'solc'
+SOLC_BINARY = os.environ.get('SOLC_BINARY', 'solc')
 
 
 @coerce_return_to_text
