@@ -10,7 +10,6 @@ dist
 build
 eggs
 parts
-bin
 var
 sdist
 develop-eggs
@@ -52,3 +51,6 @@ docs/_build
 
 # py.test cache
 .cache
+
+# npm
+node_modules
