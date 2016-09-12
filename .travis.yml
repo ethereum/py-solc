@@ -3,8 +3,6 @@ python:
   - "3.5"
 dist: trusty
 sudo: required
-cache:
-  pip: true
 env:
   global:
     - SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-0.3.6/solc"
@@ -16,8 +14,8 @@ env:
 cache:
   - pip: true
   - directories:
-    - solc-versions/solc-0.3.6
-    - solc-versions/solidity-0.3.6/build
+    - $TRAVIS_BUILD_DIR/solc-versions/solc-0.3.6
+    - $TRAVIS_BUILD_DIR/solc-versions/solidity-0.3.6/build
 install:
   - ./bin/install_solc.sh
   - travis_retry pip install setuptools --upgrade
