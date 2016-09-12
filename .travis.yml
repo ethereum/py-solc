@@ -3,10 +3,6 @@ python:
   - "3.5"
 dist: trusty
 sudo: required
-before_install:
-  #- travis_retry sudo add-apt-repository -y ppa:ethereum/ethereum
-    #- travis_retry sudo apt-get update
-    #- travis_retry sudo apt-get install -y solc
 cache:
   pip: true
 env:
@@ -24,10 +20,11 @@ cache:
     - solc-versions/solidity-0.3.6/build
 install:
   - ./bin/install_solc.sh
-  - ls -lah $TRAVIS_BUILD_DIR/solc-versions/solc-0.3.6/
-  - ./solc-versions/solc-0.3.6/solc --version
   - travis_retry pip install setuptools --upgrade
   - travis_retry pip install tox
+before_script:
+  - ls -lah $TRAVIS_BUILD_DIR/solc-versions/solc-0.3.6/
+  - ./solc-versions/solc-0.3.6/solc --version
 script:
   - env
   - tox -e $TOX_ENV
