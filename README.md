@@ -14,6 +14,8 @@ This library requires the `solc` executable to be present.
 
 solc 0.3.5 or newer is required. [solc installation instructions](http://solidity.readthedocs.io/en/latest/installing-solidity.html)
 
+> Currently does not work with anything `0.4.x` or later.
+
 
 # Quickstart
 
@@ -68,3 +70,8 @@ pip install py-solc
 >>> link_code(unlinked_code, {'TestA': '0xd3cda913deb6f67967b99d67acdfa1712c293601'})
 ... "606060405260768060106000396000f3606060405260e060020a6000350463e7f09e058114601a575b005b60187f0c55699c00000000000000000000000000000000000000000000000000000000606090815273d3cda913deb6f67967b99d67acdfa1712c29360190630c55699c906064906000906004818660325a03f41560025750505056"
 ```
+
+
+## Setting the path to the `solc` binary
+
+You can use the environment variable `SOLC_BINARY` to set the path to your solc binary.

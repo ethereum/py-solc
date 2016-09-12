@@ -1,3 +1,8 @@
+0.5.0
+-----
+
+- Add ability to set solc binary path with env variable `SOLC_BINARY`
+
 0.4.0
 -----
 
