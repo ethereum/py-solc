@@ -4,10 +4,8 @@ import os
 
 from gevent import subprocess
 
-import textwrap
-
 from .exceptions import (
-    CompileError,
+    SolcError,
 )
 from .utils.string import (
     coerce_return_to_text,
@@ -143,20 +141,11 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
     stdoutdata, stderrdata = proc.communicate()
 
     if proc.returncode != success_return_code:
-        error_message = textwrap.dedent(("""
-        Compilation Failed
-        > command: `{command}`
-        > return code: `{return_code}`
-        > stderr:
-        {stderrdata}
-        > stdout:
-        {stdoutdata}
-        """).format(
-            command=' '.join(command),
+        raise SolcError(
+            command=command,
             return_code=proc.returncode,
-            stderrdata=stderrdata,
-            stdoutdata=stdoutdata,
-        )).strip()
-        raise CompileError(error_message)
+            stdout_data=stdoutdata,
+            stderr_data=stderrdata,
+        )
 
-    return stdoutdata, stderrdata
+    return stdoutdata, stderrdata, command, proc

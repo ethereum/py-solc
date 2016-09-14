@@ -1,11 +1,23 @@
 from solc import (
     get_solc_version,
+    get_solc_version_string,
     compile_source,
 )
 
 
 def test_source_code_compilation():
-    SOURCE = "contract Foo { function Foo() {} function return13() returns (uint) { return 13; } }"
+    solc_version_string = get_solc_version_string()
+
+    solc_version = get_solc_version()
+
+    if solc_version == "0.4.1":
+        SOURCE = "pragma solidity 0.4.1;\ncontract Foo { function Foo() {} function return13() returns (uint) { return 13; } }"
+    elif solc_version == "0.3.6":
+        SOURCE = "contract Foo { function Foo() {} function return13() returns (uint) { return 13; } }"
+    else:
+        raise AssertionError("Unsupported compiler version")
+
+
     output = compile_source(SOURCE)
     assert output
     assert 'Foo' in output
@@ -19,4 +31,4 @@ def test_source_code_compilation():
 
     # TODO: figure out how to include source.
     assert foo_contract_data['source'] is None
-    assert foo_contract_data['meta']['compilerVersion'] == get_solc_version()
+    assert foo_contract_data['meta']['compilerVersion'] == solc_version_string
