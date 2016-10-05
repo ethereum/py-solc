@@ -12,7 +12,7 @@ def test_source_files_compilation(contracts_dir):
 
     solc_version = get_solc_version()
 
-    if solc_version == "0.4.1":
+    if solc_version in {"0.4.1", "0.4.2"}:
         SOURCE = "pragma solidity ^0.4.1;\ncontract Foo { function Foo() {} function return13() returns (uint) { return 13; } }"
     elif solc_version == "0.3.6":
         SOURCE = "contract Foo { function Foo() {} function return13() returns (uint) { return 13; } }"
