@@ -15,7 +15,7 @@ def FOO_SOURCE():
     solc_version = get_solc_version()
 
     if solc_version == "0.4.1":
-        return b"pragma solidity 0.4.1;\ncontract Foo { function Foo() {} }"
+        return b"pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} }"
     elif solc_version == "0.3.6":
         return b"contract Foo { function Foo() {} }"
     else:
@@ -27,7 +27,7 @@ def BAR_SOURCE():
     solc_version = get_solc_version()
 
     if solc_version == "0.4.1":
-        return b"pragma solidity 0.4.1;\ncontract Bar { function Bar() {} }"
+        return b"pragma solidity ^0.4.0;\ncontract Bar { function Bar() {} }"
     elif solc_version == "0.3.6":
         return b"contract Bar { function Bar() {} }"
     else:
