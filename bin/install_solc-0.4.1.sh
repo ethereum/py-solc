@@ -13,6 +13,7 @@ if [ ! -e solc-versions/solidity-0.4.1/build/solc/solc ] ; then
     tar -zxvf ../solc.tar.gz
     cd solidity-0.4.1
     ./scripts/install_deps.sh
+    echo "4fc6fc2ca59579fae2472df319c2d8d31fe5bde5" > commit_hash.txt
     mkdir -p build
     cd build
     cmake .. && make

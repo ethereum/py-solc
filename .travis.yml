@@ -4,8 +4,6 @@ python:
 dist: trusty
 sudo: required
 env:
-  global:
-    - SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-0.3.6/solc"
   matrix:
     - TOX_ENV=py27 SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-0.3.6/solc"
     - TOX_ENV=py34 SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-0.3.6/solc"
