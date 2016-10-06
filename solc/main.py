@@ -21,33 +21,43 @@ from .wrapper import (
 )
 
 
-version_regex = re.compile('Version: ([0-9]+\.[0-9]+\.[0-9]+(-[a-f0-9]+)?)')
+version_regex = re.compile('([0-9]+\.[0-9]+\.[0-9]+)')
 
 
 is_solc_available = functools.partial(is_executable_available, SOLC_BINARY)
 
 
-def get_solc_version(**kwargs):
+def get_solc_version_string(**kwargs):
     kwargs['version'] = True
-    stdoutdata, stderrdata = solc_wrapper(**kwargs)
-    version_match = version_regex.search(stdoutdata)
-    if version_match is None:
+    stdoutdata, stderrdata, command, proc = solc_wrapper(**kwargs)
+    _, _, version_string = stdoutdata.partition('\n')
+    if not version_string or not version_string.startswith('Version: '):
         raise SolcError(
-            "Unable to extract version string from command output: `{0}`".format(
-                stdoutdata,
-            )
+            command=command,
+            return_code=proc.returncode,
+            stdout_data=stdoutdata,
+            stderr_data=stderrdata,
+            message="Unable to extract version string from command output",
         )
-    return version_match.groups()[0]
+    return version_string
+
+
+def get_solc_version(**kwargs):
+    version_string = get_solc_version_string(**kwargs)
+
+    version_match = version_regex.search(version_string)
+    if version_match is None:
+        raise ValueError(
+            "Unable to find version in version string: {0}".format(version_string)
+        )
+    return version_match.group()
 
 
 def _parse_compiler_output(stdoutdata, compiler_version):
-
     output = json.loads(stdoutdata)
 
     if "contracts" not in output:
-        # {'sources': {}, 'version': 'xxx'}
-        # solc did not pick up any contracts
-        raise ContractsNotFound(output)
+        return {}
 
     contracts = output['contracts']
 
@@ -65,7 +75,6 @@ def _parse_compiler_output(stdoutdata, compiler_version):
             'meta': {
                 'compilerVersion': compiler_version,
                 'language': 'Solidity',
-                'languageVersion': '0',
             },
         }
         for contract_name, contract_data
@@ -87,7 +96,10 @@ ALL_OUTPUT_VALUES = [
 ]
 
 
-def compile_source(source, output_values=ALL_OUTPUT_VALUES, **kwargs):
+def compile_source(source,
+                   allow_empty=False,
+                   output_values=ALL_OUTPUT_VALUES,
+                   **kwargs):
     if 'stdin_bytes' in kwargs:
         raise ValueError(
             "The `stdin_bytes` keyword is not allowed in the `compile_source` function"
@@ -99,23 +111,30 @@ def compile_source(source, output_values=ALL_OUTPUT_VALUES, **kwargs):
 
     combined_json = ','.join(output_values)
 
-    stdoutdata, stderrdata = solc_wrapper(
+    stdoutdata, stderrdata, command, proc = solc_wrapper(
         stdin_bytes=source,
         combined_json=combined_json,
         **kwargs
     )
 
-    compiler_version = get_solc_version(version=True, **kwargs)
+    compiler_version = get_solc_version_string(version=True, **kwargs)
 
     contracts = _parse_compiler_output(stdoutdata, compiler_version)
+
+    if not contracts and not allow_empty:
+        raise ContractsNotFound(
+            command=command,
+            return_code=proc.returncode,
+            stdout_data=stdoutdata,
+            stderr_data=stderrdata,
+        )
     return contracts
 
 
-def compile_files(source_files, output_values=ALL_OUTPUT_VALUES, **kwargs):
-    if 'source_files' in kwargs:
-        raise ValueError(
-            "The `source_files` keyword is not allowed in the `compile_files` function"
-        )
+def compile_files(source_files,
+                  allow_empty=False,
+                  output_values=ALL_OUTPUT_VALUES,
+                  **kwargs):
     if 'combined_json' in kwargs:
         raise ValueError(
             "The `combined_json` keyword is not allowed in the `compile_files` function"
@@ -123,15 +142,23 @@ def compile_files(source_files, output_values=ALL_OUTPUT_VALUES, **kwargs):
 
     combined_json = ','.join(output_values)
 
-    stdoutdata, stderrdata = solc_wrapper(
+    compiler_version = get_solc_version_string(version=True, **kwargs)
+
+    stdoutdata, stderrdata, command, proc = solc_wrapper(
         source_files=source_files,
         combined_json=combined_json,
         **kwargs
     )
 
-    compiler_version = get_solc_version(version=True, **kwargs)
-
     contracts = _parse_compiler_output(stdoutdata, compiler_version)
+
+    if not contracts and not allow_empty:
+        raise ContractsNotFound(
+            command=command,
+            return_code=proc.returncode,
+            stdout_data=stdoutdata,
+            stderr_data=stderrdata,
+        )
     return contracts
 
 
@@ -140,7 +167,7 @@ def link_code(unliked_data, libraries):
         ':'.join((lib_name, lib_address))
         for lib_name, lib_address in libraries.items()
     ))
-    stdoutdata, stderrdata = solc_wrapper(
+    stdoutdata, stderrdata, _, _ = solc_wrapper(
         stdin_bytes=unliked_data,
         link=True,
         libraries=libraries_arg,
