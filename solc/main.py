@@ -53,7 +53,8 @@ def get_solc_version(**kwargs):
     return version_match.group()
 
 
-def _parse_compiler_output(stdoutdata, compiler_version):
+def _parse_compiler_output(stdoutdata, compiler_kwargs):
+    compiler_version = get_solc_version_string(version=True, **compiler_kwargs)
     output = json.loads(stdoutdata)
 
     if "contracts" not in output:
@@ -73,8 +74,15 @@ def _parse_compiler_output(stdoutdata, compiler_version):
             'code_runtime': add_0x_prefix(contract_data['bin-runtime']),
             'source': None,
             'meta': {
-                'compilerVersion': compiler_version,
-                'language': 'Solidity',
+                'compiler': {
+                    'type': 'solc',
+                    'version': compiler_version,
+                    'settings': {
+                        key: compiler_kwargs[key]
+                        for key in ['optimize', 'optimize_runs']
+                        if key in compiler_kwargs
+                    },
+                },
             },
         }
         for contract_name, contract_data
@@ -110,16 +118,11 @@ def compile_source(source,
         )
 
     combined_json = ','.join(output_values)
+    compiler_kwargs = dict(stdin_bytes=source, combined_json=combined_json, **kwargs)
 
-    stdoutdata, stderrdata, command, proc = solc_wrapper(
-        stdin_bytes=source,
-        combined_json=combined_json,
-        **kwargs
-    )
+    stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
 
-    compiler_version = get_solc_version_string(version=True, **kwargs)
-
-    contracts = _parse_compiler_output(stdoutdata, compiler_version)
+    contracts = _parse_compiler_output(stdoutdata, compiler_kwargs)
 
     if not contracts and not allow_empty:
         raise ContractsNotFound(
@@ -141,16 +144,11 @@ def compile_files(source_files,
         )
 
     combined_json = ','.join(output_values)
+    compiler_kwargs = dict(source_files=source_files, combined_json=combined_json, **kwargs)
 
-    compiler_version = get_solc_version_string(version=True, **kwargs)
+    stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
 
-    stdoutdata, stderrdata, command, proc = solc_wrapper(
-        source_files=source_files,
-        combined_json=combined_json,
-        **kwargs
-    )
-
-    contracts = _parse_compiler_output(stdoutdata, compiler_version)
+    contracts = _parse_compiler_output(stdoutdata, compiler_kwargs)
 
     if not contracts and not allow_empty:
         raise ContractsNotFound(
