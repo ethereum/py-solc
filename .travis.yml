@@ -14,6 +14,9 @@ env:
     - TOX_ENV=py27 SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-0.4.2/solc"
     - TOX_ENV=py34 SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-0.4.2/solc"
     - TOX_ENV=py35 SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-0.4.2/solc"
+    - TOX_ENV=py27 SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-0.4.4/solc"
+    - TOX_ENV=py34 SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-0.4.4/solc"
+    - TOX_ENV=py35 SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-0.4.4/solc"
     - TOX_ENV=flake8
 cache:
   - pip: true
@@ -24,16 +27,20 @@ cache:
     - $TRAVIS_BUILD_DIR/solc-versions/solidity-0.4.1/build
     - $TRAVIS_BUILD_DIR/solc-versions/solc-0.4.2
     - $TRAVIS_BUILD_DIR/solc-versions/solidity-0.4.2/build
+    - $TRAVIS_BUILD_DIR/solc-versions/solc-0.4.4
+    - $TRAVIS_BUILD_DIR/solc-versions/solidity-0.4.4/build
 install:
   - ./bin/install_solc-0.3.6.sh
   - ./bin/install_solc-0.4.1.sh
   - ./bin/install_solc-0.4.2.sh
+  - ./bin/install_solc-0.4.4.sh
   - travis_retry pip install setuptools --upgrade
   - travis_retry pip install tox
 before_script:
   - ./solc-versions/solc-0.3.6/solc --version
   - ./solc-versions/solc-0.4.1/solc --version
   - ./solc-versions/solc-0.4.2/solc --version
+  - ./solc-versions/solc-0.4.4/solc --version
 script:
   - env
   - tox -e $TOX_ENV
