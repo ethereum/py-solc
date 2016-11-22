@@ -14,7 +14,7 @@ from solc.wrapper import (
 def FOO_SOURCE():
     solc_version = get_solc_version()
 
-    if solc_version in {"0.4.1", "0.4.2", "0.4.5"}:
+    if solc_version in {"0.4.1", "0.4.2", "0.4.6"}:
         return b"pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} }"
     elif solc_version == "0.3.6":
         return b"contract Foo { function Foo() {} }"
@@ -26,7 +26,7 @@ def FOO_SOURCE():
 def BAR_SOURCE():
     solc_version = get_solc_version()
 
-    if solc_version in {"0.4.1", "0.4.2", "0.4.5"}:
+    if solc_version in {"0.4.1", "0.4.2", "0.4.6"}:
         return b"pragma solidity ^0.4.0;\ncontract Bar { function Bar() {} }"
     elif solc_version == "0.3.6":
         return b"contract Bar { function Bar() {} }"
