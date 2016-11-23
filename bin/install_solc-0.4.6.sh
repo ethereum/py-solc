@@ -7,13 +7,11 @@ set -e
 set -u
 
 if [ ! -e solc-versions/solidity-0.4.6/build/solc/solc ] ; then
-    wget -O solc.tar.gz "https://github.com/ethereum/solidity/archive/v0.4.6.tar.gz"
-    install -d solc-versions
-    cd solc-versions
-    tar -zxvf ../solc.tar.gz
-    cd solidity-0.4.6
+    mkdir -p solc-versions/solidity-0.4.6
+    cd solc-versions/solidity-0.4.6
+    git clone --recurse-submodules --branch v0.4.6 https://github.com/ethereum/solidity.git
+    cd solidity
     ./scripts/install_deps.sh
-    echo "2dabbdf06f414750ef0425c664f861aeb3e470b8" > commit_hash.txt
     mkdir -p build
     cd build
     cmake .. && make
