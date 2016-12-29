@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+set -u
+
+cd $TRAVIS_BUILD_DIR/solc-versions/solc-0.4.2
+./solc "$@"

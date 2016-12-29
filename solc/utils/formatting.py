@@ -19,12 +19,6 @@ def is_0x_prefixed(value):
     return is_prefixed(value, '0x')
 
 
-def remove_0x_prefix(value):
-    if is_0x_prefixed(value):
-        return value[2:]
-    return value
-
-
 def add_0x_prefix(value):
     if is_0x_prefixed(value):
         return value

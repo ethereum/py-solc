@@ -12,8 +12,6 @@ def test_source_code_compilation():
 
     if solc_version in {"0.4.1", "0.4.2", "0.4.6"}:
         SOURCE = "pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} function return13() returns (uint) { return 13; } }"
-    elif solc_version == "0.3.6":
-        SOURCE = "contract Foo { function Foo() {} function return13() returns (uint) { return 13; } }"
     else:
         raise AssertionError("Unsupported compiler version: {0}".format(solc_version))
 
