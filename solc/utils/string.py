@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 import functools
+import codecs
 
 from .types import (
     is_bytes,
