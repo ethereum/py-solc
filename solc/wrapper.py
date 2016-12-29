@@ -30,6 +30,7 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
                  assemble=None,
                  link=None,
                  source_files=None,
+                 import_remappings=None,
                  ast=None,
                  ast_json=None,
                  asm=None,
@@ -79,6 +80,9 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
 
     if assemble:
         command.append('--assemble')
+
+    if import_remappings is not None:
+        command.extend(import_remappings)
 
     if source_files is not None:
         command.extend(source_files)

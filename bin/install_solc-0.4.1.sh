@@ -19,7 +19,7 @@ if [ ! -e solc-versions/solidity-0.4.1/build/solc/solc ] ; then
     cmake .. && make
     ln -fs $PWD/solc/solc ../../../solc-versions/solc-0.4.1
     chmod +x ../../../solc-versions/solc-0.4.1
-    echo "Geth installed at $PWD/solc-0.4.1"
+    echo "Solidity installed at $PWD/solc-0.4.1"
 else
-    echo "Geth already installed at $PWD/solc/solc-0.4.1"
+    echo "Solidity already installed at $PWD/solc/solc-0.4.1"
 fi
