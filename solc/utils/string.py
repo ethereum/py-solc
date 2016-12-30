@@ -9,6 +9,7 @@ from .types import (
     is_string,
 )
 
+
 def force_bytes(value):
     if is_bytes(value):
         return bytes(value)
