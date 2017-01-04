@@ -82,7 +82,7 @@ You can use this like:
 ```
 from solc import compile_source, compile_files, link_code
 
-compile_files([source_file_path], remappings=["zeppeling=/my-zeppelin-checkout-folder"])
+compile_files([source_file_path], import_remappings=["zeppeling=/my-zeppelin-checkout-folder"])
 ```
 
 [More information about solc import aliasing](http://solidity.readthedocs.io/en/develop/layout-of-source-files.html#paths) 
