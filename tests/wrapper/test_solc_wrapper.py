@@ -16,8 +16,6 @@ def FOO_SOURCE():
 
     if solc_version in {"0.4.1", "0.4.2", "0.4.6"}:
         return b"pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} }"
-    elif solc_version == "0.3.6":
-        return b"contract Foo { function Foo() {} }"
     else:
         raise AssertionError("Unsupported compiler version: {0}".format(solc_version))
 
@@ -28,8 +26,6 @@ def BAR_SOURCE():
 
     if solc_version in {"0.4.1", "0.4.2", "0.4.6"}:
         return b"pragma solidity ^0.4.0;\ncontract Bar { function Bar() {} }"
-    elif solc_version == "0.3.6":
-        return b"contract Bar { function Bar() {} }"
     else:
         raise AssertionError("Unsupported compiler version: {0}".format(solc_version))
 
