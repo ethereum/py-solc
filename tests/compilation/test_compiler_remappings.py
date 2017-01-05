@@ -6,7 +6,7 @@ from solc import (
 )
 
 
-def test_remappings(contracts_dir):
+def test_import_remapping(contracts_dir):
     IMPORT_SOURCE = "contract Bar {}"
     SOURCE = 'import "bar/moo.sol"; contract Foo is Bar { function Foo() {} function return13() returns (uint) { return 13; } }'
 
@@ -21,7 +21,7 @@ def test_remappings(contracts_dir):
     with open(source_file_path, 'w') as source_file:
         source_file.write(SOURCE)
 
-    output = compile_files([source_file_path], remappings=["bar={}".format(baz_path)])
+    output = compile_files([source_file_path], import_remappings=["bar={}".format(baz_path)])
 
     assert output
     assert 'Foo' in output
