@@ -8,7 +8,7 @@ from solc import (
 
 def test_import_remapping(contracts_dir):
     IMPORT_SOURCE = "contract Bar {}"
-    SOURCE = 'import "bar/moo.sol"; contract Foo is Bar { function Foo() {} function return13() returns (uint) { return 13; } }'
+    SOURCE = 'import "bar/Moo.sol"; contract Foo is Bar { function Foo() {} function return13() returns (uint) { return 13; } }'
 
     baz_path = os.path.abspath(os.path.join(contracts_dir, "baz"))
     os.makedirs(baz_path)

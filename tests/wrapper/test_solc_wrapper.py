@@ -14,7 +14,7 @@ from solc.wrapper import (
 def FOO_SOURCE():
     solc_version = get_solc_version()
 
-    if solc_version in {"0.4.1", "0.4.2", "0.4.6"}:
+    if solc_version in {"0.4.1", "0.4.2", "0.4.4", "0.4.6"}:
         return b"pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} }"
     else:
         raise AssertionError("Unsupported compiler version: {0}".format(solc_version))
@@ -24,7 +24,7 @@ def FOO_SOURCE():
 def BAR_SOURCE():
     solc_version = get_solc_version()
 
-    if solc_version in {"0.4.1", "0.4.2", "0.4.6"}:
+    if solc_version in {"0.4.1", "0.4.2", "0.4.4", "0.4.6"}:
         return b"pragma solidity ^0.4.0;\ncontract Bar { function Bar() {} }"
     else:
         raise AssertionError("Unsupported compiler version: {0}".format(solc_version))
