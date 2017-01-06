@@ -1,3 +1,10 @@
+0.7.0
+-----
+
+- Drop support for 0.3.6
+- Add support for 0.4.6
+- Add ability to specify import remappings
+
 0.6.0
 -----
 
