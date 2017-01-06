@@ -69,7 +69,21 @@ pip install py-solc
 ... "606060405260768060106000396000f3606060405260e060020a6000350463e7f09e058114601a575b005b60187f0c55699c00000000000000000000000000000000000000000000000000000000606090815273d3cda913deb6f67967b99d67acdfa1712c29360190630c55699c906064906000906004818660325a03f41560025750505056"
 ```
 
-
 ## Setting the path to the `solc` binary
 
 You can use the environment variable `SOLC_BINARY` to set the path to your solc binary.
+
+## Import path remappings
+
+`solc` provides path aliasing allow you to have more reusable project configurations.
+ 
+You can use this like:
+
+```
+from solc import compile_source, compile_files, link_code
+
+compile_files([source_file_path], import_remappings=["zeppeling=/my-zeppelin-checkout-folder"])
+```
+
+[More information about solc import aliasing](http://solidity.readthedocs.io/en/develop/layout-of-source-files.html#paths) 
+
