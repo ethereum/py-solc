@@ -26,6 +26,16 @@ Installation
 pip install py-solc
 ```
 
+Or to install with support for gevent
+
+```sh
+pip install py-solc[gevent]
+```
+
+To enable gevent subprocessing set the environment variable `SOLC_USE_GEVENT`
+
+
+
 ```python
 >>> from solc import compile_source, compile_files, link_code
 >>> compile_source("contract Foo { function Foo() {} }")
