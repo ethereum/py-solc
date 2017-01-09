@@ -1,3 +1,8 @@
+0.8.0
+-----
+
+- Remove hard gevent dependency
+
 0.7.0
 -----
 
