@@ -32,7 +32,7 @@ Or to install with support for gevent
 pip install py-solc[gevent]
 ```
 
-To enable gevent subprocessing set the environment variable `SOLC_USE_GEVENT`
+To enable gevent subprocessing set the environment variable `SOLC_THREADING_BACKEND=gevent`
 
 
 
