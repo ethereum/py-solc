@@ -2,15 +2,11 @@ from __future__ import absolute_import
 
 import os
 
-if 'SOLC_USE_GEVENT' in os.environ:
-    from gevent import subprocess
-else:
-    import subprocess
-
-from .exceptions import (  # noqa: E402
+from .compat import subprocess
+from .exceptions import (
     SolcError,
 )
-from .utils.string import (  # noqa: E402
+from .utils.string import (
     coerce_return_to_text,
 )
 
