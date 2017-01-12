@@ -72,6 +72,8 @@ def _parse_compiler_output(stdoutdata, compiler_kwargs):
             'abi': contract_data['abi'],
             'code': add_0x_prefix(contract_data['bin']),
             'code_runtime': add_0x_prefix(contract_data['bin-runtime']),
+            'userdoc': contract_data['userdoc'],
+            'devdoc': contract_data['devdoc'],
             'source': None,
             'meta': {
                 'compiler': {
@@ -79,7 +81,7 @@ def _parse_compiler_output(stdoutdata, compiler_kwargs):
                     'version': compiler_version,
                     'settings': {
                         key: compiler_kwargs[key]
-                        for key in ['optimize', 'optimize_runs']
+                        for key in {'optimize', 'optimize_runs'}
                         if key in compiler_kwargs
                     },
                 },
@@ -90,7 +92,7 @@ def _parse_compiler_output(stdoutdata, compiler_kwargs):
     }
 
 
-ALL_OUTPUT_VALUES = [
+ALL_OUTPUT_VALUES = (
     "abi",
     "asm",
     "ast",
@@ -101,7 +103,7 @@ ALL_OUTPUT_VALUES = [
     "interface",
     "opcodes",
     "userdoc",
-]
+)
 
 
 def compile_source(source,
