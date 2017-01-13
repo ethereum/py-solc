@@ -9,9 +9,6 @@ from .exceptions import (
     ContractsNotFound,
 )
 
-from .utils.formatting import (
-    add_0x_prefix,
-)
 from .utils.filesystem import (
     is_executable_available,
 )
