@@ -53,8 +53,7 @@ def get_solc_version(**kwargs):
     return version_match.group()
 
 
-def _parse_compiler_output(stdoutdata, compiler_kwargs):
-    compiler_version = get_solc_version_string(version=True, **compiler_kwargs)
+def _parse_compiler_output(stdoutdata):
     output = json.loads(stdoutdata)
 
     if "contracts" not in output:
@@ -65,31 +64,7 @@ def _parse_compiler_output(stdoutdata, compiler_kwargs):
     for _, data in contracts.items():
         data['abi'] = json.loads(data['abi'])
 
-    sorted_contracts = sorted(contracts.items(), key=lambda c: c[0])
-
-    return {
-        contract_name: {
-            'abi': contract_data['abi'],
-            'code': add_0x_prefix(contract_data['bin']),
-            'code_runtime': add_0x_prefix(contract_data['bin-runtime']),
-            'userdoc': contract_data['userdoc'],
-            'devdoc': contract_data['devdoc'],
-            'source': None,
-            'meta': {
-                'compiler': {
-                    'type': 'solc',
-                    'version': compiler_version,
-                    'settings': {
-                        key: compiler_kwargs[key]
-                        for key in {'optimize', 'optimize_runs'}
-                        if key in compiler_kwargs
-                    },
-                },
-            },
-        }
-        for contract_name, contract_data
-        in sorted_contracts
-    }
+    return contracts
 
 
 ALL_OUTPUT_VALUES = (
@@ -124,7 +99,7 @@ def compile_source(source,
 
     stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
 
-    contracts = _parse_compiler_output(stdoutdata, compiler_kwargs)
+    contracts = _parse_compiler_output(stdoutdata)
 
     if not contracts and not allow_empty:
         raise ContractsNotFound(
@@ -150,7 +125,7 @@ def compile_files(source_files,
 
     stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
 
-    contracts = _parse_compiler_output(stdoutdata, compiler_kwargs)
+    contracts = _parse_compiler_output(stdoutdata)
 
     if not contracts and not allow_empty:
         raise ContractsNotFound(
