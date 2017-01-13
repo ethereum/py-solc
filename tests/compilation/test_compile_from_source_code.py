@@ -21,16 +21,5 @@ def test_source_code_compilation():
     assert 'Foo' in output
 
     foo_contract_data = output['Foo']
-    assert 'code' in foo_contract_data
-    assert 'code_runtime' in foo_contract_data
-    assert 'source' in foo_contract_data
-    assert 'meta' in foo_contract_data
-    assert 'compiler' in foo_contract_data['meta']
-
-    # TODO: figure out how to include source.
-    assert foo_contract_data['source'] is None
-
-    compiler_info = foo_contract_data['meta']['compiler']
-    assert compiler_info['version'] == solc_version_string
-    assert compiler_info['type'] == 'solc'
-    assert compiler_info['settings']['optimize'] is True
+    assert 'bin' in foo_contract_data
+    assert 'bin-runtime' in foo_contract_data
