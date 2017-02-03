@@ -25,15 +25,15 @@ env:
     #- TOX_ENV=py27-gevent SOLC_BINARY=$TRAVIS_BUILD_DIR/solc-versions/solc-0.4.6/solc SOLC_INSTALL_SCRIPT=$TRAVIS_BUILD_DIR/bin/install_solc-0.4.6.sh LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/solc-versions/solc-0.4.6
     #- TOX_ENV=py34-gevent SOLC_BINARY=$TRAVIS_BUILD_DIR/solc-versions/solc-0.4.6/solc SOLC_INSTALL_SCRIPT=$TRAVIS_BUILD_DIR/bin/install_solc-0.4.6.sh LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/solc-versions/solc-0.4.6
     #- TOX_ENV=py35-gevent SOLC_BINARY=$TRAVIS_BUILD_DIR/solc-versions/solc-0.4.6/solc SOLC_INSTALL_SCRIPT=$TRAVIS_BUILD_DIR/bin/install_solc-0.4.6.sh LD_LIBRARY_PATH=$TRAVIS_BUILD_DIR/solc-versions/solc-0.4.6
-    #- TOX_ENV=flake8 SOLC_BINARY=ls SOLC_INSTALL_SCRIPT=/bin/ls
+    - TOX_ENV=flake8 SOLC_BINARY=ls SOLC_INSTALL_SCRIPT=/bin/ls
 cache:
   - pip: true
 before_install:
-  - export SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-$SOLC_VERSION/solc"
-  - export LD_LIBRARY_PATH="$TRAVIS_BUILD_DIR/solc-versions/solc-$SOLC_VERSION"
+  - echo "${SOLC_VERSION:?SOLC_VERSION not set.  Not setting SOLC_BINARY}" && export SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-$SOLC_VERSION/solc"
+  - echo "${SOLC_VERSION:?SOLC_VERSION not set.  Not setting LD_LIBRARY_PATH}" && export LD_LIBRARY_PATH="$TRAVIS_BUILD_DIR/solc-versions/solc-$SOLC_VERSION"
+  - echo "${SOLC_VERSION:?SOLC_VERSION not set.  Not installing tree and unzip}" && sudo apt-get install -y tree unzip
 install:
-  - sudo apt-get install -y tree unzip
-  - /.$TRAVIS_BUILD_DIR/bin/install_solc-$SOLC_VERSION.sh
+  - echo "${SOLC_VERSION:?SOLC_VERSION not set.  Not executind solc install script" && /.$TRAVIS_BUILD_DIR/bin/install_solc.sh
   - travis_retry pip install setuptools --upgrade
   - travis_retry pip install tox
 before_script:
