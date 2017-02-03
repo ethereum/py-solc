@@ -15,7 +15,7 @@ readme = open(os.path.join(DIR, 'README.md')).read()
 
 setup(
     name='py-solc',
-    version="1.0.0",
+    version="1.0.1",
     description="""Python wrapper around the solc binary""",
     long_description=readme,
     author='Piper Merriam',
