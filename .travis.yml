@@ -51,7 +51,7 @@ env:
     - TOX_ENV=py35-gevent SOLC_VERSION=0.4.8
     - TOX_ENV=py35-gevent SOLC_VERSION=0.4.9
     # linting
-    - TOX_ENV=flake8 SOLC_BINARY=ls SOLC_INSTALL_SCRIPT=/bin/ls
+    - TOX_ENV=flake8
 cache:
   - pip: true
 before_install:
@@ -63,7 +63,7 @@ install:
   - travis_retry pip install setuptools --upgrade
   - travis_retry pip install tox
 before_script:
-  - $SOLC_BINARY --version
+  - echo "${SOLC_BINARY:?SOLC_BINARY not set.  Not checking solc version}" && $SOLC_BINARY --version
 script:
   - env
   - tox -e $TOX_ENV
