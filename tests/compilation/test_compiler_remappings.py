@@ -10,6 +10,8 @@ def test_import_remapping(contracts_dir):
     IMPORT_SOURCE = "contract Bar {}"
     SOURCE = 'import "bar/Moo.sol"; contract Foo is Bar { function Foo() {} function return13() returns (uint) { return 13; } }'
 
+    solc_version = get_solc_version()
+
     baz_path = os.path.abspath(os.path.join(contracts_dir, "baz"))
     os.makedirs(baz_path)
 
@@ -24,4 +26,10 @@ def test_import_remapping(contracts_dir):
     output = compile_files([source_file_path], import_remappings=["bar={}".format(baz_path)])
 
     assert output
-    assert 'Foo' in output
+
+    if solc_version == '0.4.9':
+        contact_key = '{0}:Foo'.format(os.path.abspath(source_file_path))
+    else:
+        contact_key = 'Foo'
+
+    assert contact_key in output

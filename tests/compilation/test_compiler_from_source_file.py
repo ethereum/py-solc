@@ -7,12 +7,12 @@ from solc import (
 )
 
 
-def test_source_files_compilation(contracts_dir):
+def test_source_files_compilation(contracts_dir, SUPPORTED_SOLC_VERSIONS):
     solc_version_string = get_solc_version_string()
 
     solc_version = get_solc_version()
 
-    if solc_version in {"0.4.1", "0.4.2", "0.4.4", "0.4.6"}:
+    if solc_version in SUPPORTED_SOLC_VERSIONS:
         SOURCE = "pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} function return13() returns (uint) { return 13; } }"
     else:
         raise AssertionError("Unsupported compiler version: {0}".format(solc_version))
@@ -24,8 +24,14 @@ def test_source_files_compilation(contracts_dir):
     output = compile_files([source_file_path], optimize=True)
 
     assert output
-    assert 'Foo' in output
 
-    foo_contract_data = output['Foo']
+    if solc_version == '0.4.9':
+        contact_key = '{0}:Foo'.format(os.path.abspath(source_file_path))
+    else:
+        contact_key = 'Foo'
+
+    assert contact_key in output
+
+    foo_contract_data = output[contact_key]
     assert 'bin' in foo_contract_data
     assert 'bin-runtime' in foo_contract_data

@@ -11,20 +11,20 @@ from solc.wrapper import (
 
 
 @pytest.fixture()
-def FOO_SOURCE():
+def FOO_SOURCE(SUPPORTED_SOLC_VERSIONS):
     solc_version = get_solc_version()
 
-    if solc_version in {"0.4.1", "0.4.2", "0.4.4", "0.4.6"}:
+    if solc_version in SUPPORTED_SOLC_VERSIONS:
         return b"pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} }"
     else:
         raise AssertionError("Unsupported compiler version: {0}".format(solc_version))
 
 
 @pytest.fixture()
-def BAR_SOURCE():
+def BAR_SOURCE(SUPPORTED_SOLC_VERSIONS):
     solc_version = get_solc_version()
 
-    if solc_version in {"0.4.1", "0.4.2", "0.4.4", "0.4.6"}:
+    if solc_version in SUPPORTED_SOLC_VERSIONS:
         return b"pragma solidity ^0.4.0;\ncontract Bar { function Bar() {} }"
     else:
         raise AssertionError("Unsupported compiler version: {0}".format(solc_version))
