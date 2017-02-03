@@ -55,15 +55,15 @@ env:
 cache:
   - pip: true
 before_install:
-  - echo "${SOLC_VERSION:?SOLC_VERSION not set.  Not setting SOLC_BINARY}" && export SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-$SOLC_VERSION/solc"
-  - echo "${SOLC_VERSION:?SOLC_VERSION not set.  Not setting LD_LIBRARY_PATH}" && export LD_LIBRARY_PATH="$TRAVIS_BUILD_DIR/solc-versions/solc-$SOLC_VERSION"
-  - echo "${SOLC_VERSION:?SOLC_VERSION not set.  Not installing tree and unzip}" && sudo apt-get install -y tree unzip
+  - if [ -n "SOLC_VERSION" ]; then export SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-$SOLC_VERSION/solc"; fi
+  - if [ -n "SOLC_VERSION" ]; then export LD_LIBRARY_PATH="$TRAVIS_BUILD_DIR/solc-versions/solc-$SOLC_VERSION"; fi
+  - if [ -n "SOLC_VERSION" ]; then sudo apt-get install -y tree unzip; fi
 install:
-  - echo "${SOLC_VERSION:?SOLC_VERSION not set.  Not executind solc install script}" && /.$TRAVIS_BUILD_DIR/bin/install_solc.sh
+  - if [ -n "SOLC_VERSION" ]; then /.$TRAVIS_BUILD_DIR/bin/install_solc.sh; fi
   - travis_retry pip install setuptools --upgrade
   - travis_retry pip install tox
 before_script:
-  - echo "${SOLC_BINARY:?SOLC_BINARY not set.  Not checking solc version}" && $SOLC_BINARY --version
+  - if [ -n "SOLC_BINARY" ]; then $SOLC_BINARY --version; fi
 script:
   - env
   - tox -e $TOX_ENV
