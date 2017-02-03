@@ -24,8 +24,14 @@ def test_source_files_compilation(contracts_dir, SUPPORTED_SOLC_VERSIONS):
     output = compile_files([source_file_path], optimize=True)
 
     assert output
-    assert 'Foo' in output
 
-    foo_contract_data = output['Foo']
+    if solc_version == '0.4.9':
+        contact_key = '{0}:Foo'.format(os.path.abspath(source_file_path))
+    else:
+        contact_key = 'Foo'
+
+    assert contact_key in output
+
+    foo_contract_data = output[contact_key]
     assert 'bin' in foo_contract_data
     assert 'bin-runtime' in foo_contract_data

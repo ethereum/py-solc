@@ -18,8 +18,14 @@ def test_source_code_compilation(SUPPORTED_SOLC_VERSIONS):
 
     output = compile_source(SOURCE, optimize=True)
     assert output
-    assert 'Foo' in output
 
-    foo_contract_data = output['Foo']
+    if solc_version == '0.4.9':
+        contact_key = '<stdin>:Foo'
+    else:
+        contact_key = 'Foo'
+
+    assert contact_key in output
+
+    foo_contract_data = output[contact_key]
     assert 'bin' in foo_contract_data
     assert 'bin-runtime' in foo_contract_data
