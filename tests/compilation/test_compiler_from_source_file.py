@@ -9,7 +9,6 @@ from solc import (
 
 
 def test_source_files_compilation(contracts_dir, SUPPORTED_SOLC_VERSIONS):
-    import pdb; pdb.set_trace()
     solc_version_string = get_solc_version_string()
 
     solc_version = get_solc_version()

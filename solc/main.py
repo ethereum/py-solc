@@ -19,8 +19,6 @@ from .wrapper import (
 
 import semantic_version
 
-version_regex = re.compile('([0-9]+\.[0-9]+\.[0-9]+)')
-
 
 is_solc_available = functools.partial(is_executable_available, SOLC_BINARY)
 
