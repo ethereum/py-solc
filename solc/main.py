@@ -20,6 +20,9 @@ from .wrapper import (
 import semantic_version
 
 
+VERSION_DEV_DATE_MANGLER_RE = re.compile(r'(\d{4})\.0?(\d{1,2})\.0?(\d{1,2})')
+strip_zeroes_from_month_and_day = functools.partial(VERSION_DEV_DATE_MANGLER_RE.sub,
+                                                    r'\g<1>.\g<2>.\g<3>')
 is_solc_available = functools.partial(is_executable_available, SOLC_BINARY)
 
 
@@ -40,9 +43,11 @@ def get_solc_version_string(**kwargs):
 
 def get_solc_version(**kwargs):
     # semantic_version as of 2017-5-5 expects only one + to be used in string
-    return semantic_version.Version(get_solc_version_string(**kwargs)
-        [len('Version: '):]
-        .replace('++', 'pp'))
+    return semantic_version.Version(
+        strip_zeroes_from_month_and_day(
+            get_solc_version_string(**kwargs)
+            [len('Version: '):]
+            .replace('++', 'pp')))
 
 
 def _parse_compiler_output(stdoutdata):
