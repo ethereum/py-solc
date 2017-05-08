@@ -17,6 +17,7 @@ from .wrapper import (
     solc_wrapper,
 )
 
+import semantic_version
 
 version_regex = re.compile('([0-9]+\.[0-9]+\.[0-9]+)')
 
@@ -40,14 +41,10 @@ def get_solc_version_string(**kwargs):
 
 
 def get_solc_version(**kwargs):
-    version_string = get_solc_version_string(**kwargs)
-
-    version_match = version_regex.search(version_string)
-    if version_match is None:
-        raise ValueError(
-            "Unable to find version in version string: {0}".format(version_string)
-        )
-    return version_match.group()
+    # semantic_version as of 2017-5-5 expects only one + to be used in string
+    return semantic_version.Version(get_solc_version_string(**kwargs)
+        [len('Version: '):]
+        .replace('++', 'pp'))
 
 
 def _parse_compiler_output(stdoutdata):

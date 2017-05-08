@@ -1,3 +1,4 @@
+from semantic_version import Spec
 from solc import (
     get_solc_version,
     get_solc_version_string,
@@ -19,7 +20,7 @@ def test_source_code_compilation(SUPPORTED_SOLC_VERSIONS):
     output = compile_source(SOURCE, optimize=True)
     assert output
 
-    if solc_version == '0.4.9':
+    if solc_version in Spec('>=0.4.9'):
         contact_key = '<stdin>:Foo'
     else:
         contact_key = 'Foo'

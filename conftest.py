@@ -1,4 +1,5 @@
 import pytest
+import semantic_version
 
 
 @pytest.fixture()
@@ -8,12 +9,4 @@ def contracts_dir(tmpdir):
 
 @pytest.fixture(scope="session")
 def SUPPORTED_SOLC_VERSIONS():
-    return {
-        "0.4.1",
-        "0.4.2",
-        "0.4.4",
-        "0.4.6",
-        "0.4.7",
-        "0.4.8",
-        "0.4.9",
-    }
+    return semantic_version.Spec('>=0.4.1,<=0.4.11')
