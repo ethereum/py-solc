@@ -50,6 +50,13 @@ def get_solc_version(**kwargs):
             .replace('++', 'pp')))
 
 
+def solc_supports_standard_json_interface(**kwargs):
+    kwargs['help'] = True
+    kwargs['success_return_code'] = 1 # return code for this is totally wrong, but I'm a Jersey boy
+    stdoutdata, _, _, _ = solc_wrapper(**kwargs)
+    return '--standard-json' in stdoutdata
+
+
 def _parse_compiler_output(stdoutdata):
     output = json.loads(stdoutdata)
 
