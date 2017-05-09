@@ -4,7 +4,7 @@ from solc.main import solc_supports_standard_json_interface
 import semantic_version
 
 
-def test_get_solc_version():
+def test_solc_supports_standard_json_interface():
     version = get_solc_version()
 
     if version in semantic_version.Spec("<0.4.11"):
