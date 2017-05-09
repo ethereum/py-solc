@@ -104,7 +104,8 @@ def test_providing_standard_json_input(FOO_SOURCE, BAR_SOURCE):
     }).encode()
 
     output, err, _, _ = solc_wrapper(stdin_bytes=stdin_bytes, standard_json=True)
+    output = json.loads(output)
     assert output
-    assert 'Foo' in output
-    assert 'Bar' in output
+    assert 'Foo.sol' in output['contracts']
+    assert 'Bar.sol' in output['contracts']
     assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
