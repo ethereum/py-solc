@@ -52,7 +52,9 @@ def get_solc_version(**kwargs):
 
 def solc_supports_standard_json_interface(**kwargs):
     kwargs['help'] = True
-    kwargs['success_return_code'] = 1 # return code for this is totally wrong, but I'm a Jersey boy
+    # HACK: account for solc return code being 1 when it should be 0
+    zero_or_one = type('retcodehack', (tuple,), {'__ne__': lambda s, x: x not in s})((0, 1))
+    kwargs['success_return_code'] = zero_or_one
     stdoutdata, _, _, _ = solc_wrapper(**kwargs)
     return '--standard-json' in stdoutdata
 
