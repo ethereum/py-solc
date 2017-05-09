@@ -2,9 +2,11 @@ from __future__ import unicode_literals
 
 import pytest
 
+import json
 import os
 
 from solc import get_solc_version
+from solc.main import solc_supports_standard_json_interface
 from solc.wrapper import (
     solc_wrapper,
 )
@@ -72,6 +74,36 @@ def test_providing_multiple_source_files(contracts_dir, FOO_SOURCE, BAR_SOURCE):
         source_file.write(BAR_SOURCE)
 
     output, err, _, _ = solc_wrapper(source_files=[source_file_a_path, source_file_b_path], bin=True)
+    assert output
+    assert 'Foo' in output
+    assert 'Bar' in output
+    assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
+
+
+@pytest.mark.skipif(not solc_supports_standard_json_interface(),
+                    reason="requires `--standard-json` support")
+def test_providing_standard_json_input(FOO_SOURCE, BAR_SOURCE):
+    stdin_bytes = json.dumps({
+        "language": "Solidity",
+        "sources": {
+            "Foo.sol": {
+              "content": FOO_SOURCE.decode()
+            },
+            "Bar.sol": {
+              "content": BAR_SOURCE.decode()
+            }
+        },
+        "settings":
+        {
+            "outputSelection": {
+              "*": {
+                "*": [ "abi", "evm.bytecode.link_references", "evm.bytecode.object", "devdoc", "metadata", "userdoc" ]
+              }
+            }
+        }
+    }).encode()
+
+    output, err, _, _ = solc_wrapper(stdin_bytes=stdin_bytes, standard_json=True)
     assert output
     assert 'Foo' in output
     assert 'Bar' in output
