@@ -47,7 +47,7 @@ def test_version():
 
 
 def test_providing_stdin(FOO_SOURCE):
-    output, err, _, _ = solc_wrapper(stdin_bytes=FOO_SOURCE, bin=True)
+    output, err, _, _ = solc_wrapper(stdin=FOO_SOURCE, bin=True)
     assert output
     assert 'Foo' in output
     assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'

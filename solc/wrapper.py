@@ -16,7 +16,7 @@ SOLC_BINARY = os.environ.get('SOLC_BINARY', 'solc')
 
 @coerce_return_to_text
 def solc_wrapper(solc_binary=SOLC_BINARY,
-                 stdin_bytes=None,
+                 stdin=None,
                  help=None,
                  version=None,
                  add_std=None,
@@ -135,17 +135,16 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
     if formal:
         command.append('--formal')
 
-    if stdin_bytes is not None:
-        stdin = subprocess.Popen(['echo', stdin_bytes], stdout=subprocess.PIPE).stdout
-    else:
-        stdin = subprocess.PIPE
+    if hasattr(stdin, 'encode'):
+        # solc expects utf-8 from stdin
+        stdin = stdin.encode('utf-8')
 
     proc = subprocess.Popen(command,
-                            stdin=stdin,
+                            stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
 
-    stdoutdata, stderrdata = proc.communicate()
+    stdoutdata, stderrdata = proc.communicate(stdin)
 
     if proc.returncode != success_return_code:
         raise SolcError(

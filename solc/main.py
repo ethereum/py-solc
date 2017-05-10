@@ -91,9 +91,9 @@ def compile_source(source,
                    allow_empty=False,
                    output_values=ALL_OUTPUT_VALUES,
                    **kwargs):
-    if 'stdin_bytes' in kwargs:
+    if 'stdin' in kwargs:
         raise ValueError(
-            "The `stdin_bytes` keyword is not allowed in the `compile_source` function"
+            "The `stdin` keyword is not allowed in the `compile_source` function"
         )
     if 'combined_json' in kwargs:
         raise ValueError(
@@ -101,7 +101,7 @@ def compile_source(source,
         )
 
     combined_json = ','.join(output_values)
-    compiler_kwargs = dict(stdin_bytes=source, combined_json=combined_json, **kwargs)
+    compiler_kwargs = dict(stdin=source, combined_json=combined_json, **kwargs)
 
     stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
 
@@ -149,7 +149,7 @@ def link_code(unlinked_data, libraries):
         for lib_name, lib_address in libraries.items()
     ))
     stdoutdata, stderrdata, _, _ = solc_wrapper(
-        stdin_bytes=unlinked_data,
+        stdin=unlinked_data,
         link=True,
         libraries=libraries_arg,
     )
