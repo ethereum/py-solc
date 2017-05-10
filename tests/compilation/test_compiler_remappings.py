@@ -1,5 +1,6 @@
 import os
 
+from semantic_version import Spec
 from solc import (
     get_solc_version,
     compile_files,
@@ -27,7 +28,7 @@ def test_import_remapping(contracts_dir):
 
     assert output
 
-    if solc_version == '0.4.9':
+    if solc_version in Spec('>=0.4.9'):
         contact_key = '{0}:Foo'.format(os.path.abspath(source_file_path))
     else:
         contact_key = 'Foo'

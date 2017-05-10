@@ -1,5 +1,6 @@
 import os
 
+from semantic_version import Spec
 from solc import (
     get_solc_version,
     get_solc_version_string,
@@ -25,7 +26,7 @@ def test_source_files_compilation(contracts_dir, SUPPORTED_SOLC_VERSIONS):
 
     assert output
 
-    if solc_version == '0.4.9':
+    if solc_version in Spec('>=0.4.9'):
         contact_key = '{0}:Foo'.format(os.path.abspath(source_file_path))
     else:
         contact_key = 'Foo'

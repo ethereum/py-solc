@@ -34,21 +34,21 @@ def test_help():
     output, err, _, _ = solc_wrapper(help=True, success_return_code=1)
     assert output
     assert 'Solidity' in output
-    assert not err
+    assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
 
 
 def test_version():
     output, err, _, _ = solc_wrapper(version=True)
     assert output
     assert 'Version' in output
-    assert not err
+    assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
 
 
 def test_providing_stdin(FOO_SOURCE):
     output, err, _, _ = solc_wrapper(stdin_bytes=FOO_SOURCE, bin=True)
     assert output
     assert 'Foo' in output
-    assert not err
+    assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
 
 
 def test_providing_single_source_file(contracts_dir, FOO_SOURCE):
@@ -59,7 +59,7 @@ def test_providing_single_source_file(contracts_dir, FOO_SOURCE):
     output, err, _, _ = solc_wrapper(source_files=[source_file_path], bin=True)
     assert output
     assert 'Foo' in output
-    assert not err
+    assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
 
 
 def test_providing_multiple_source_files(contracts_dir, FOO_SOURCE, BAR_SOURCE):
@@ -75,4 +75,4 @@ def test_providing_multiple_source_files(contracts_dir, FOO_SOURCE, BAR_SOURCE):
     assert output
     assert 'Foo' in output
     assert 'Bar' in output
-    assert not err
+    assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
