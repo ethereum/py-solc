@@ -1,3 +1,5 @@
+import pytest
+
 import os
 
 from semantic_version import Spec
@@ -5,10 +7,10 @@ from solc import (
     get_solc_version,
     compile_files,
 )
-from ..test_utils import checks_solc_version
+
+pytestmark = pytest.mark.usefixtures('supported_solc_version')
 
 
-@checks_solc_version
 def test_source_files_compilation(contracts_dir):
     SOURCE = "pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} function return13() returns (uint) { return 13; } }"
 

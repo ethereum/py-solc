@@ -7,10 +7,8 @@ from solc import (
 )
 from solc.exceptions import SolcError
 
-from ..test_utils import skipif_no_standard_json
 
-
-@skipif_no_standard_json
+@pytest.mark.requires_standard_json
 def test_compile_standard():
     result = compile_standard({
         'language': 'Solidity',
@@ -41,7 +39,7 @@ def test_compile_standard():
     int(result['contracts']['Foo.sol']['Foo']['evm']['bytecode']['object'], 16)
 
 
-@skipif_no_standard_json
+@pytest.mark.requires_standard_json
 def test_compile_standard_invalid_source():
     with pytest.raises(SolcError):
         compile_standard({

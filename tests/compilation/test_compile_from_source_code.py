@@ -1,19 +1,17 @@
-from semantic_version import Spec
-from solc import (
-    get_solc_version,
-    compile_source,
-)
-from ..test_utils import checks_solc_version
+import pytest
+
+from solc import compile_source
+
+pytestmark = pytest.mark.usefixtures('supported_solc_version')
 
 
-@checks_solc_version
-def test_source_code_compilation():
+def test_source_code_compilation(is_new_key_format):
     SOURCE = "pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} function return13() returns (uint) { return 13; } }"
 
     output = compile_source(SOURCE, optimize=True)
     assert output
 
-    if get_solc_version() in Spec('>=0.4.9'):
+    if is_new_key_format:
         contact_key = '<stdin>:Foo'
     else:
         contact_key = 'Foo'
