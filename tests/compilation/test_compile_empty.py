@@ -20,5 +20,5 @@ def test_compile_empty_folder():
 
 @skipif_no_standard_json
 def test_compile_standard_empty_sources():
-	with pytest.raises(ContractsNotFound):
-		compile_standard({'language': 'Solidity', 'sources': {}})
+    with pytest.raises(ContractsNotFound):
+        compile_standard({'language': 'Solidity', 'sources': {}})
