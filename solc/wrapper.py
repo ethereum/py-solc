@@ -152,6 +152,7 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
         raise SolcError(
             command=command,
             return_code=proc.returncode,
+            stdin_data=stdin,
             stdout_data=stdoutdata,
             stderr_data=stderrdata,
         )

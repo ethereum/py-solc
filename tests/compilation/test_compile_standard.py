@@ -1,8 +1,12 @@
+import pytest
+
 import textwrap
 
 from solc import (
     compile_standard,
 )
+from solc.exceptions import SolcError
+
 from ..test_utils import skipif_no_standard_json
 
 
@@ -35,3 +39,21 @@ def test_compile_standard():
     assert 'bytecode' in result['contracts']['Foo.sol']['Foo']['evm']
     assert 'object' in result['contracts']['Foo.sol']['Foo']['evm']['bytecode']
     int(result['contracts']['Foo.sol']['Foo']['evm']['bytecode']['object'], 16)
+
+
+@skipif_no_standard_json
+def test_compile_standard_invalid_source():
+    with pytest.raises(SolcError):
+        compile_standard({
+            'language': 'Solidity',
+            'sources': {
+                'Foo.sol': {
+                    'content': textwrap.dedent('''\
+                        pragma solidity ^0.4.0;
+                        contract Foo {'''),
+                },
+            },
+            'outputSelection': {
+                "*": {"*": ["evm.bytecode.object"]},
+            },
+        })
