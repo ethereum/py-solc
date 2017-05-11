@@ -8,11 +8,21 @@ from solc.exceptions import SolcError
 pytestmark = pytest.mark.requires_standard_json
 
 
+def contract_in_output_map(contract_name, contract_map):
+    try:
+        return int(contract_map
+            ['contracts/{}.sol'.format(contract_name)]
+            [contract_name]
+            ['evm']['bytecode']['object'], 16) is not None
+    except:
+        return False
+
+
 def test_compile_standard(FOO_SOURCE):
     result = compile_standard({
         'language': 'Solidity',
         'sources': {
-            'Foo.sol': {
+            'contracts/Foo.sol': {
                 'content': FOO_SOURCE,
             },
         },
@@ -23,12 +33,7 @@ def test_compile_standard(FOO_SOURCE):
 
     assert isinstance(result, dict)
     assert 'contracts' in result
-    assert 'Foo.sol' in result['contracts']
-    assert 'Foo' in result['contracts']['Foo.sol']
-    assert 'evm' in result['contracts']['Foo.sol']['Foo']
-    assert 'bytecode' in result['contracts']['Foo.sol']['Foo']['evm']
-    assert 'object' in result['contracts']['Foo.sol']['Foo']['evm']['bytecode']
-    int(result['contracts']['Foo.sol']['Foo']['evm']['bytecode']['object'], 16)
+    assert contract_in_output_map('Foo', result['contracts'])
 
 
 def test_compile_standard_invalid_source(INVALID_SOURCE):
@@ -36,7 +41,7 @@ def test_compile_standard_invalid_source(INVALID_SOURCE):
         compile_standard({
             'language': 'Solidity',
             'sources': {
-                'Foo.sol': {
+                'contracts/Foo.sol': {
                     'content': INVALID_SOURCE,
                 },
             },
@@ -44,3 +49,25 @@ def test_compile_standard_invalid_source(INVALID_SOURCE):
                 "*": {"*": ["evm.bytecode.object"]},
             },
         })
+
+
+def test_compile_standard_with_dependency(BAR_SOURCE, BAZ_SOURCE):
+    result = compile_standard({
+        'language': 'Solidity',
+        'sources': {
+            'contracts/Bar.sol': {
+                'content': BAR_SOURCE,
+            },
+            'contracts/Baz.sol': {
+                'content': BAZ_SOURCE,
+            },
+        },
+        'outputSelection': {
+            "*": {"*": ["evm.bytecode.object"]},
+        },
+    })
+
+    assert isinstance(result, dict)
+    assert 'contracts' in result
+    assert contract_in_output_map('Bar', result['contracts'])
+    assert contract_in_output_map('Baz', result['contracts'])
