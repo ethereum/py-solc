@@ -146,6 +146,17 @@ def compile_files(source_files,
     return contracts
 
 
+def compile_standard(input_data, allow_empty=False):
+    if not input_data.get('sources') and not allow_empty:
+        raise ContractsNotFound(
+            command=None,
+            return_code=None,
+            stdin_data=json.dumps(input_data, sort_keys=True, indent=2),
+            stdout_data=None,
+            stderr_data=None,
+        )
+
+
 def link_code(unlinked_data, libraries):
     libraries_arg = ','.join((
         ':'.join((lib_name, lib_address))
