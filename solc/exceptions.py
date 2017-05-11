@@ -1,11 +1,6 @@
 import textwrap
-import codecs
 
-
-def force_text(maybe_bytes):
-    if isinstance(maybe_bytes, bytes):
-        return codecs.decode(maybe_bytes, 'utf8')
-    return maybe_bytes
+from .utils.string import force_text
 
 
 DEFAULT_MESSAGE = "An error occurred during execution"
@@ -19,8 +14,8 @@ class SolcError(Exception):
             self.message = message
         self.command = command
         self.return_code = return_code
-        self.stderr_data = force_text(stderr_data)
-        self.stdout_data = force_text(stdout_data)
+        self.stderr_data = force_text(stderr_data, 'utf8')
+        self.stdout_data = force_text(stdout_data, 'utf8')
 
     def __str__(self):
         return textwrap.dedent(("""
