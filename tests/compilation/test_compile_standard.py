@@ -34,4 +34,4 @@ def test_compile_standard():
     assert 'evm' in result['contracts']['Foo.sol']['Foo']
     assert 'bytecode' in result['contracts']['Foo.sol']['Foo']['evm']
     assert 'object' in result['contracts']['Foo.sol']['Foo']['evm']['bytecode']
-    # TODO: test that thing is hex
+    int(result['contracts']['Foo.sol']['Foo']['evm']['bytecode']['object'], 16)
