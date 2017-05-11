@@ -11,62 +11,58 @@ from solc.wrapper import (
 )
 
 
-@pytest.fixture()
-def FOO_SOURCE(supported_solc_version):
-    return b"pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} }"
-
-
-@pytest.fixture()
-def BAR_SOURCE(supported_solc_version):
-    return b"pragma solidity ^0.4.0;\ncontract Bar { function Bar() {} }"
+def is_benign(err):
+    return not err or err in (
+        'Warning: This is a pre-release compiler version, please do not use it in production.\n',
+    )
 
 
 def test_help():
     output, err, _, _ = solc_wrapper(help=True, success_return_code=1)
     assert output
     assert 'Solidity' in output
-    assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
+    assert is_benign(err)
 
 
 def test_version():
     output, err, _, _ = solc_wrapper(version=True)
     assert output
     assert 'Version' in output
-    assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
+    assert is_benign(err)
 
 
 def test_providing_stdin(FOO_SOURCE):
     output, err, _, _ = solc_wrapper(stdin=FOO_SOURCE, bin=True)
     assert output
     assert 'Foo' in output
-    assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
+    assert is_benign(err)
 
 
 def test_providing_single_source_file(contracts_dir, FOO_SOURCE):
     source_file_path = os.path.join(contracts_dir, 'Foo.sol')
-    with open(source_file_path, 'wb') as source_file:
+    with open(source_file_path, 'w') as source_file:
         source_file.write(FOO_SOURCE)
 
     output, err, _, _ = solc_wrapper(source_files=[source_file_path], bin=True)
     assert output
     assert 'Foo' in output
-    assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
+    assert is_benign(err)
 
 
 def test_providing_multiple_source_files(contracts_dir, FOO_SOURCE, BAR_SOURCE):
     source_file_a_path = os.path.join(contracts_dir, 'Foo.sol')
     source_file_b_path = os.path.join(contracts_dir, 'Bar.sol')
 
-    with open(source_file_a_path, 'wb') as source_file:
+    with open(source_file_a_path, 'w') as source_file:
         source_file.write(FOO_SOURCE)
-    with open(source_file_b_path, 'wb') as source_file:
+    with open(source_file_b_path, 'w') as source_file:
         source_file.write(BAR_SOURCE)
 
     output, err, _, _ = solc_wrapper(source_files=[source_file_a_path, source_file_b_path], bin=True)
     assert output
     assert 'Foo' in output
     assert 'Bar' in output
-    assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
+    assert is_benign(err)
 
 
 @pytest.mark.requires_standard_json
@@ -75,10 +71,10 @@ def test_providing_standard_json_input(FOO_SOURCE, BAR_SOURCE):
         "language": "Solidity",
         "sources": {
             "Foo.sol": {
-              "content": FOO_SOURCE.decode()
+              "content": FOO_SOURCE
             },
             "Bar.sol": {
-              "content": BAR_SOURCE.decode()
+              "content": BAR_SOURCE
             }
         },
         "settings":
@@ -96,4 +92,4 @@ def test_providing_standard_json_input(FOO_SOURCE, BAR_SOURCE):
     assert output
     assert 'Foo.sol' in output['contracts']
     assert 'Bar.sol' in output['contracts']
-    assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
+    assert is_benign(err)

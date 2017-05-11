@@ -11,18 +11,16 @@ from solc import (
 pytestmark = pytest.mark.usefixtures('supported_solc_version')
 
 
-def test_source_files_compilation(contracts_dir):
-    SOURCE = "pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} function return13() returns (uint) { return 13; } }"
-
+def test_source_files_compilation(FOO_SOURCE, is_new_key_format, contracts_dir):
     source_file_path = os.path.join(contracts_dir, 'Foo.sol')
     with open(source_file_path, 'w') as source_file:
-        source_file.write(SOURCE)
+        source_file.write(FOO_SOURCE)
 
     output = compile_files([source_file_path], optimize=True)
 
     assert output
 
-    if get_solc_version() in Spec('>=0.4.9'):
+    if is_new_key_format:
         contract_key = '{0}:Foo'.format(os.path.abspath(source_file_path))
     else:
         contract_key = 'Foo'

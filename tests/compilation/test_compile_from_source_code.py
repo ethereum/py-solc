@@ -5,10 +5,8 @@ from solc import compile_source
 pytestmark = pytest.mark.usefixtures('supported_solc_version')
 
 
-def test_source_code_compilation(is_new_key_format):
-    SOURCE = "pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} function return13() returns (uint) { return 13; } }"
-
-    output = compile_source(SOURCE, optimize=True)
+def test_source_code_compilation(FOO_SOURCE, is_new_key_format):
+    output = compile_source(FOO_SOURCE, optimize=True)
     assert output
 
     if is_new_key_format:

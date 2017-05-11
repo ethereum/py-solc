@@ -1,5 +1,7 @@
 import pytest
 
+import textwrap
+
 from semantic_version import Spec
 
 from solc import get_solc_version
@@ -23,6 +25,57 @@ def supported_solc_version():
 @pytest.fixture()
 def is_new_key_format():
     return get_solc_version() in Spec('>=0.4.9')
+
+
+@pytest.fixture()
+def FOO_SOURCE(supported_solc_version):
+    return textwrap.dedent('''\
+        pragma solidity ^0.4.0;
+
+        contract Foo {
+            function Foo() {}
+
+            function return13() returns (uint) {
+                return 13;
+            }
+        }
+        ''')
+
+
+@pytest.fixture()
+def BAR_SOURCE(supported_solc_version):
+    return textwrap.dedent('''\
+        pragma solidity ^0.4.0;
+
+        contract Bar {
+            function Bar() {}
+        }
+        ''')
+
+
+@pytest.fixture()
+def BAZ_SOURCE(supported_solc_version):
+    return textwrap.dedent('''\
+        pragma solidity ^0.4.0;
+
+        import "contracts/Bar.sol";
+
+        contract Baz is Bar {
+            function Baz() {}
+
+            function get_funky() returns (string) {
+                return "funky";
+            }
+        }
+        ''')
+
+
+@pytest.fixture()
+def INVALID_SOURCE(supported_solc_version):
+    return textwrap.dedent('''\
+        pragma solidity ^0.4.0;
+        contract Foo {
+        ''')
 
 
 def pytest_runtest_setup(item):

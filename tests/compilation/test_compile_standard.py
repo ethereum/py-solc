@@ -1,27 +1,19 @@
 import pytest
 
-import textwrap
-
 from solc import (
     compile_standard,
 )
 from solc.exceptions import SolcError
 
+pytestmark = pytest.mark.requires_standard_json
 
-@pytest.mark.requires_standard_json
-def test_compile_standard():
+
+def test_compile_standard(FOO_SOURCE):
     result = compile_standard({
         'language': 'Solidity',
         'sources': {
             'Foo.sol': {
-                'content': textwrap.dedent('''\
-                    pragma solidity ^0.4.0;
-                    contract Foo {
-                        function Foo() {}
-                        function return13() returns (uint) {
-                            return 13;
-                        }
-                    }'''),
+                'content': FOO_SOURCE,
             },
         },
         'outputSelection': {
@@ -39,16 +31,13 @@ def test_compile_standard():
     int(result['contracts']['Foo.sol']['Foo']['evm']['bytecode']['object'], 16)
 
 
-@pytest.mark.requires_standard_json
-def test_compile_standard_invalid_source():
+def test_compile_standard_invalid_source(INVALID_SOURCE):
     with pytest.raises(SolcError):
         compile_standard({
             'language': 'Solidity',
             'sources': {
                 'Foo.sol': {
-                    'content': textwrap.dedent('''\
-                        pragma solidity ^0.4.0;
-                        contract Foo {'''),
+                    'content': INVALID_SOURCE,
                 },
             },
             'outputSelection': {
