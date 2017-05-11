@@ -8,11 +8,11 @@ def force_text(maybe_bytes):
     return maybe_bytes
 
 
-DEFAULT_MESSAGE = "An error occured during execution"
+DEFAULT_MESSAGE = "An error occurred during execution"
 
 
 class SolcError(Exception):
-    message = "An error occurred during execution"
+    message = DEFAULT_MESSAGE
 
     def __init__(self, command, return_code, stdout_data, stderr_data, message=None):
         if message is not None:
