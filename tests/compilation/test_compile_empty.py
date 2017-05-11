@@ -8,6 +8,7 @@ from solc import (
 )
 
 from solc.exceptions import ContractsNotFound
+from ..test_utils import skipif_no_standard_json
 
 
 def test_compile_empty_folder():
@@ -17,6 +18,7 @@ def test_compile_empty_folder():
         compile_files([])
 
 
+@skipif_no_standard_json
 def test_compile_standard_empty_sources():
 	with pytest.raises(ContractsNotFound):
-		compile_standard({})
+		compile_standard({'language': 'Solidity', 'sources': {}})

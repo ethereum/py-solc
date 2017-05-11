@@ -6,10 +6,10 @@ import json
 import os
 
 from solc import get_solc_version
-from solc.main import solc_supports_standard_json_interface
 from solc.wrapper import (
     solc_wrapper,
 )
+from ..test_utils import skipif_no_standard_json
 
 
 @pytest.fixture()
@@ -80,8 +80,7 @@ def test_providing_multiple_source_files(contracts_dir, FOO_SOURCE, BAR_SOURCE):
     assert not err or err == 'Warning: This is a pre-release compiler version, please do not use it in production.\n'
 
 
-@pytest.mark.skipif(not solc_supports_standard_json_interface(),
-                    reason="requires `--standard-json` support")
+@skipif_no_standard_json
 def test_providing_standard_json_input(FOO_SOURCE, BAR_SOURCE):
     stdin = json.dumps({
         "language": "Solidity",

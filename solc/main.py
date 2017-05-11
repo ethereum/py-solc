@@ -156,6 +156,13 @@ def compile_standard(input_data, allow_empty=False):
             stderr_data=None,
         )
 
+    stdoutdata, stderrdata, command, proc = solc_wrapper(
+        stdin=json.dumps(input_data),
+        standard_json=True,
+    )
+
+    return json.loads(stdoutdata)
+
 
 def link_code(unlinked_data, libraries):
     libraries_arg = ','.join((
