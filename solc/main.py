@@ -34,6 +34,7 @@ def get_solc_version_string(**kwargs):
         raise SolcError(
             command=command,
             return_code=proc.returncode,
+            stdin_data=None,
             stdout_data=stdoutdata,
             stderr_data=stderrdata,
             message="Unable to extract version string from command output",
@@ -111,6 +112,7 @@ def compile_source(source,
         raise ContractsNotFound(
             command=command,
             return_code=proc.returncode,
+            stdin_data=source,
             stdout_data=stdoutdata,
             stderr_data=stderrdata,
         )
@@ -137,6 +139,7 @@ def compile_files(source_files,
         raise ContractsNotFound(
             command=command,
             return_code=proc.returncode,
+            stdin_data=None,
             stdout_data=stdoutdata,
             stderr_data=stderrdata,
         )
