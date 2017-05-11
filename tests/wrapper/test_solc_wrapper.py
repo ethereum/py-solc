@@ -9,27 +9,23 @@ from solc import get_solc_version
 from solc.wrapper import (
     solc_wrapper,
 )
-from ..test_utils import skipif_no_standard_json
+
+from ..test_utils import (
+    skipif_no_standard_json,
+    checks_solc_version,
+)
 
 
 @pytest.fixture()
-def FOO_SOURCE(SUPPORTED_SOLC_VERSIONS):
-    solc_version = get_solc_version()
-
-    if solc_version in SUPPORTED_SOLC_VERSIONS:
-        return b"pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} }"
-    else:
-        raise AssertionError("Unsupported compiler version: {0}".format(solc_version))
+@checks_solc_version
+def FOO_SOURCE():
+    return b"pragma solidity ^0.4.0;\ncontract Foo { function Foo() {} }"
 
 
 @pytest.fixture()
-def BAR_SOURCE(SUPPORTED_SOLC_VERSIONS):
-    solc_version = get_solc_version()
-
-    if solc_version in SUPPORTED_SOLC_VERSIONS:
-        return b"pragma solidity ^0.4.0;\ncontract Bar { function Bar() {} }"
-    else:
-        raise AssertionError("Unsupported compiler version: {0}".format(solc_version))
+@checks_solc_version
+def BAR_SOURCE():
+    return b"pragma solidity ^0.4.0;\ncontract Bar { function Bar() {} }"
 
 
 def test_help():
