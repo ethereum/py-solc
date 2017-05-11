@@ -83,7 +83,7 @@ def test_providing_multiple_source_files(contracts_dir, FOO_SOURCE, BAR_SOURCE):
 @pytest.mark.skipif(not solc_supports_standard_json_interface(),
                     reason="requires `--standard-json` support")
 def test_providing_standard_json_input(FOO_SOURCE, BAR_SOURCE):
-    stdin_bytes = json.dumps({
+    stdin = json.dumps({
         "language": "Solidity",
         "sources": {
             "Foo.sol": {
@@ -101,9 +101,9 @@ def test_providing_standard_json_input(FOO_SOURCE, BAR_SOURCE):
               }
             }
         }
-    }).encode()
+    })
 
-    output, err, _, _ = solc_wrapper(stdin_bytes=stdin_bytes, standard_json=True)
+    output, err, _, _ = solc_wrapper(stdin=stdin, standard_json=True)
     output = json.loads(output)
     assert output
     assert 'Foo.sol' in output['contracts']
