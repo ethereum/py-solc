@@ -34,6 +34,7 @@ def get_solc_version_string(**kwargs):
         raise SolcError(
             command=command,
             return_code=proc.returncode,
+            stdin_data=None,
             stdout_data=stdoutdata,
             stderr_data=stderrdata,
             message="Unable to extract version string from command output",
@@ -48,6 +49,15 @@ def get_solc_version(**kwargs):
             get_solc_version_string(**kwargs)
             [len('Version: '):]
             .replace('++', 'pp')))
+
+
+def solc_supports_standard_json_interface(**kwargs):
+    kwargs['help'] = True
+    # HACK: account for solc return code being 1 when it should be 0
+    zero_or_one = type('retcodehack', (tuple,), {'__ne__': lambda s, x: x not in s})((0, 1))
+    kwargs['success_return_code'] = zero_or_one
+    stdoutdata, _, _, _ = solc_wrapper(**kwargs)
+    return '--standard-json' in stdoutdata
 
 
 def _parse_compiler_output(stdoutdata):
@@ -82,9 +92,9 @@ def compile_source(source,
                    allow_empty=False,
                    output_values=ALL_OUTPUT_VALUES,
                    **kwargs):
-    if 'stdin_bytes' in kwargs:
+    if 'stdin' in kwargs:
         raise ValueError(
-            "The `stdin_bytes` keyword is not allowed in the `compile_source` function"
+            "The `stdin` keyword is not allowed in the `compile_source` function"
         )
     if 'combined_json' in kwargs:
         raise ValueError(
@@ -92,7 +102,7 @@ def compile_source(source,
         )
 
     combined_json = ','.join(output_values)
-    compiler_kwargs = dict(stdin_bytes=source, combined_json=combined_json, **kwargs)
+    compiler_kwargs = dict(stdin=source, combined_json=combined_json, **kwargs)
 
     stdoutdata, stderrdata, command, proc = solc_wrapper(**compiler_kwargs)
 
@@ -102,6 +112,7 @@ def compile_source(source,
         raise ContractsNotFound(
             command=command,
             return_code=proc.returncode,
+            stdin_data=source,
             stdout_data=stdoutdata,
             stderr_data=stderrdata,
         )
@@ -128,19 +139,38 @@ def compile_files(source_files,
         raise ContractsNotFound(
             command=command,
             return_code=proc.returncode,
+            stdin_data=None,
             stdout_data=stdoutdata,
             stderr_data=stderrdata,
         )
     return contracts
 
 
-def link_code(unliked_data, libraries):
+def compile_standard(input_data, allow_empty=False):
+    if not input_data.get('sources') and not allow_empty:
+        raise ContractsNotFound(
+            command=None,
+            return_code=None,
+            stdin_data=json.dumps(input_data, sort_keys=True, indent=2),
+            stdout_data=None,
+            stderr_data=None,
+        )
+
+    stdoutdata, stderrdata, command, proc = solc_wrapper(
+        stdin=json.dumps(input_data),
+        standard_json=True,
+    )
+
+    return json.loads(stdoutdata)
+
+
+def link_code(unlinked_data, libraries):
     libraries_arg = ','.join((
         ':'.join((lib_name, lib_address))
         for lib_name, lib_address in libraries.items()
     ))
     stdoutdata, stderrdata, _, _ = solc_wrapper(
-        stdin_bytes=unliked_data,
+        stdin=unlinked_data,
         link=True,
         libraries=libraries_arg,
     )

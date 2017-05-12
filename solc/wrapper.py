@@ -7,6 +7,7 @@ from .exceptions import (
     SolcError,
 )
 from .utils.string import (
+    force_bytes,
     coerce_return_to_text,
 )
 
@@ -16,7 +17,7 @@ SOLC_BINARY = os.environ.get('SOLC_BINARY', 'solc')
 
 @coerce_return_to_text
 def solc_wrapper(solc_binary=SOLC_BINARY,
-                 stdin_bytes=None,
+                 stdin=None,
                  help=None,
                  version=None,
                  add_std=None,
@@ -44,6 +45,7 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
                  userdoc=None,
                  devdoc=None,
                  formal=None,
+                 standard_json=None,
                  success_return_code=0):
     command = [solc_binary]
 
@@ -76,6 +78,9 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
 
     if gas:
         command.append('--gas')
+
+    if standard_json:
+        command.append('--standard-json')
 
     if assemble:
         command.append('--assemble')
@@ -131,22 +136,23 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
     if formal:
         command.append('--formal')
 
-    if stdin_bytes is not None:
-        stdin = subprocess.Popen(['echo', stdin_bytes], stdout=subprocess.PIPE).stdout
-    else:
-        stdin = subprocess.PIPE
+    if stdin is not None:
+        # solc seems to expects utf-8 from stdin:
+        # see Scanner class in Solidity source
+        stdin = force_bytes(stdin, 'utf8')
 
     proc = subprocess.Popen(command,
-                            stdin=stdin,
+                            stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
 
-    stdoutdata, stderrdata = proc.communicate()
+    stdoutdata, stderrdata = proc.communicate(stdin)
 
     if proc.returncode != success_return_code:
         raise SolcError(
             command=command,
             return_code=proc.returncode,
+            stdin_data=stdin,
             stdout_data=stdoutdata,
             stderr_data=stderrdata,
         )

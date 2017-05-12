@@ -5,5 +5,6 @@ from .main import (  # NOQA
     get_solc_version,
     compile_files,
     compile_source,
+    compile_standard,
     link_code,
 )
