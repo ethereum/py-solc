@@ -8,64 +8,69 @@ env:
   matrix:
     # Standard Library
     # py27
-    - TOX_ENV=py27-stdlib SOLC_VERSION=0.4.1
-    - TOX_ENV=py27-stdlib SOLC_VERSION=0.4.2
-    - TOX_ENV=py27-stdlib SOLC_VERSION=0.4.6
-    - TOX_ENV=py27-stdlib SOLC_VERSION=0.4.7
-    - TOX_ENV=py27-stdlib SOLC_VERSION=0.4.8
-    - TOX_ENV=py27-stdlib SOLC_VERSION=0.4.9
+    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.1
+    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.2
+    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.6
+    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.7
+    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.8
+    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.9
+    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.11
     # py34
-    - TOX_ENV=py34-stdlib SOLC_VERSION=0.4.1
-    - TOX_ENV=py34-stdlib SOLC_VERSION=0.4.2
-    - TOX_ENV=py34-stdlib SOLC_VERSION=0.4.6
-    - TOX_ENV=py34-stdlib SOLC_VERSION=0.4.7
-    - TOX_ENV=py34-stdlib SOLC_VERSION=0.4.8
-    - TOX_ENV=py34-stdlib SOLC_VERSION=0.4.9
+    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.1
+    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.2
+    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.6
+    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.7
+    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.8
+    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.9
+    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.11
     # py35
-    - TOX_ENV=py35-stdlib SOLC_VERSION=0.4.1
-    - TOX_ENV=py35-stdlib SOLC_VERSION=0.4.2
-    - TOX_ENV=py35-stdlib SOLC_VERSION=0.4.6
-    - TOX_ENV=py35-stdlib SOLC_VERSION=0.4.7
-    - TOX_ENV=py35-stdlib SOLC_VERSION=0.4.8
-    - TOX_ENV=py35-stdlib SOLC_VERSION=0.4.9
+    #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.1
+    #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.2
+    #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.6
+    #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.7
+    #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.8
+    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.8
+    #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.11 SOLC_FROM_SOURCE=true
     # Gevent
     # py27
-    - TOX_ENV=py27-gevent SOLC_VERSION=0.4.1
-    - TOX_ENV=py27-gevent SOLC_VERSION=0.4.2
-    - TOX_ENV=py27-gevent SOLC_VERSION=0.4.6
-    - TOX_ENV=py27-gevent SOLC_VERSION=0.4.7
-    - TOX_ENV=py27-gevent SOLC_VERSION=0.4.8
-    - TOX_ENV=py27-gevent SOLC_VERSION=0.4.9
+    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.1
+    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.2
+    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.6
+    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.7
+    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.8
+    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.9
+    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.11
     # py34
-    - TOX_ENV=py34-gevent SOLC_VERSION=0.4.1
-    - TOX_ENV=py34-gevent SOLC_VERSION=0.4.2
-    - TOX_ENV=py34-gevent SOLC_VERSION=0.4.6
-    - TOX_ENV=py34-gevent SOLC_VERSION=0.4.7
-    - TOX_ENV=py34-gevent SOLC_VERSION=0.4.8
-    - TOX_ENV=py34-gevent SOLC_VERSION=0.4.9
+    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.1
+    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.2
+    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.6
+    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.7
+    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.8
+    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.9
+    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.11
     # py35
-    - TOX_ENV=py35-gevent SOLC_VERSION=0.4.1
-    - TOX_ENV=py35-gevent SOLC_VERSION=0.4.2
-    - TOX_ENV=py35-gevent SOLC_VERSION=0.4.6
-    - TOX_ENV=py35-gevent SOLC_VERSION=0.4.7
-    - TOX_ENV=py35-gevent SOLC_VERSION=0.4.8
-    - TOX_ENV=py35-gevent SOLC_VERSION=0.4.9
+    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.1
+    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.2
+    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.6
+    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.7
+    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.8
+    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.9
+    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.11
     # linting
     - TOX_ENV=flake8
 cache:
   - pip: true
 before_install:
-  - if [ -n "$SOLC_VERSION" ]; then export SOLC_BINARY="$TRAVIS_BUILD_DIR/solc-versions/solc-$SOLC_VERSION/solc"; fi
-  - if [ -n "$SOLC_VERSION" ]; then export LD_LIBRARY_PATH="$TRAVIS_BUILD_DIR/solc-versions/solc-$SOLC_VERSION"; fi
-  - if [ -n "$SOLC_VERSION" ]; then sudo apt-get install -y tree unzip; fi
 install:
-  - if [ -n "$SOLC_VERSION" ]; then /.$TRAVIS_BUILD_DIR/bin/install_solc.sh; fi
+  - if [ -n "$SOLC_VERSION" ]; then python3 $TRAVIS_BUILD_DIR/scripts/install_solc.py $SOLC_VERSION; fi
   - travis_retry pip install setuptools --upgrade
   - travis_retry pip install tox
 before_script:
+  - if [ -n "$SOLC_VERSION" ]; then export SOLC_BINARY="$TRAVIS_BUILD_DIR/bin/solc-$SOLC_VERSION/bin/solc"; fi
+  - if [ -n "$SOLC_VERSION" ]; then export LD_LIBRARY_PATH="$TRAVIS_BUILD_DIR/bin/solc-$SOLC_VERSION/bin"; fi
+  - env
   - if [ -n "$SOLC_BINARY" ]; then $SOLC_BINARY --version; fi
 script:
-  - env
   - tox -e $TOX_ENV
 after_script:
   - cat .tox/$TOX_ENV/log/*.log

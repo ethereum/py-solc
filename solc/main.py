@@ -146,7 +146,7 @@ def compile_files(source_files,
     return contracts
 
 
-def compile_standard(input_data, allow_empty=False):
+def compile_standard(input_data, allow_empty=False, **kwargs):
     if not input_data.get('sources') and not allow_empty:
         raise ContractsNotFound(
             command=None,
@@ -159,6 +159,7 @@ def compile_standard(input_data, allow_empty=False):
     stdoutdata, stderrdata, command, proc = solc_wrapper(
         stdin=json.dumps(input_data),
         standard_json=True,
+        **kwargs
     )
 
     return json.loads(stdoutdata)

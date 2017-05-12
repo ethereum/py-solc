@@ -23,6 +23,9 @@ setup(
     url='https://github.com/pipermerriam/py-solc',
     include_package_data=True,
     py_modules=['solc'],
+    install_requires=[
+        "semantic_version>=2.6.0",
+    ],
     extras_require={
         'gevent': [
             "gevent>=1.1.1,<1.2.0",

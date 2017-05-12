@@ -45,6 +45,7 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
                  userdoc=None,
                  devdoc=None,
                  formal=None,
+                 allow_paths=None,
                  standard_json=None,
                  success_return_code=0):
     command = [solc_binary]
@@ -78,6 +79,9 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
 
     if gas:
         command.append('--gas')
+
+    if allow_paths:
+        command.extend(('--allow-paths', allow_paths))
 
     if standard_json:
         command.append('--standard-json')

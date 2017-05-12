@@ -1,3 +1,5 @@
+import os
+
 import pytest
 
 from solc import (
@@ -71,3 +73,25 @@ def test_compile_standard_with_dependency(BAR_SOURCE, BAZ_SOURCE):
     assert 'contracts' in result
     assert contract_in_output_map('Bar', result['contracts'])
     assert contract_in_output_map('Baz', result['contracts'])
+
+
+def test_compile_standard_with_file_paths(FOO_SOURCE, is_new_key_format, contracts_dir):
+    source_file_path = os.path.join(contracts_dir, 'Foo.sol')
+    with open(source_file_path, 'w') as source_file:
+        source_file.write(FOO_SOURCE)
+
+    result = compile_standard({
+        'language': 'Solidity',
+        'sources': {
+            'contracts/Foo.sol': {
+                'urls': [source_file_path],
+            },
+        },
+        'outputSelection': {
+            "*": {"*": ["evm.bytecode.object"]},
+        },
+    }, allow_paths=contracts_dir)
+
+    assert isinstance(result, dict)
+    assert 'contracts' in result
+    assert contract_in_output_map('Foo', result['contracts'])
