@@ -30,7 +30,7 @@ env:
     #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.7
     #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.8
     - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.8
-    #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.11 SOLC_FROM_SOURCE=true
+    - TOX_ENV=py35-stdlib SOLC_VERSION=0.4.11 SOLC_FROM_SOURCE=true
     # Gevent
     # py27
     #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.1

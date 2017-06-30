@@ -210,7 +210,20 @@ def install_solc_from_release(identifier):
     print("solc successfully installed at: {0}".format(executable_path))
 
 
+SUPPORTED_VERSIONS = {
+    'v0.4.8',
+    'v0.4.11',
+}
+
+
 def install_solc(identifier):
+    if identifier not in SUPPORTED_VERSIONS:
+        raise ValueError(
+            "Installation of solidity=={0} is not supported.  Must be one of {1}".format(
+                identifier,
+                ', '.join(sorted(SUPPORTED_VERSIONS)),
+            )
+        )
     install_solc_dependencies(identifier)
     install_solc_from_release(identifier)
 
