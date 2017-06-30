@@ -72,6 +72,30 @@ def ensure_parent_dir_exists(path):
     ensure_path_exists(os.path.dirname(path))
 
 
+def check_subprocess_call(command, message=None, stderr=subprocess.STDOUT, **proc_kwargs):
+    if message:
+        print(message)
+    print("Executing: {0}".format(" ".join(command)))
+
+    return subprocess.check_call(
+        command,
+        stderr=subprocess.STDOUT,
+        **proc_kwargs
+    )
+
+
+def check_subprocess_output(command, message=None, stderr=subprocess.STDOUT, **proc_kwargs):
+    if message:
+        print(message)
+    print("Executing: {0}".format(" ".join(command)))
+
+    return subprocess.check_output(
+        command,
+        stderr=subprocess.STDOUT,
+        **proc_kwargs
+    )
+
+
 is_git_available = is_executable_available('git')
 
 
@@ -96,31 +120,23 @@ def clone_solidity_repository(identifier):
         SOLIDITY_GIT_URI,
         destination,
     ]
-    print(
-        "Check out solidity repository @ {0}: {1}".format(
-            identifier,
-            " ".join(command),
-        )
-    )
 
-    return subprocess.check_call(
+    return check_subprocess_call(
         command,
-        stderr=subprocess.STDOUT,
+        message="Checking out solidity repository @ {0}".format(identifier),
     )
 
 
 def install_dependencies(identifier):
     source_path = get_source_path(identifier)
     install_deps_script_path = os.path.join(source_path, 'scripts', 'install_deps.sh')
-    return subprocess.check_call(
-        [
-            "sh", install_deps_script_path,
-        ],
-        stderr=subprocess.STDOUT,
+
+    return check_subprocess_call(
+        command=["sh", install_deps_script_path],
+        message="Running dependency installation script `install_deps.sh` @ {0}".format(
+            install_deps_script_path,
+        ),
     )
-
-
-DOWNLOAD_URI_TEMPLATE = "https://github.com/ethereum/solidity/releases/download/{0}/solidity-ubuntu-trusty.zip"
 
 
 def get_release_zipfile_path(identifier):
@@ -145,8 +161,11 @@ def get_executable_path(identifier):
     )
 
 
-def download_release(identifier):
-    download_uri = DOWNLOAD_URI_TEMPLATE.format(identifier)
+DOWNLOAD_UBUNTU_RELEASE_URI_TEMPLATE = "https://github.com/ethereum/solidity/releases/download/{0}/solidity-ubuntu-trusty.zip"
+
+
+def download_ubuntu_release(identifier):
+    download_uri = DOWNLOAD_UBUNTU_RELEASE_URI_TEMPLATE.format(identifier)
     release_zipfile_path = get_release_zipfile_path(identifier)
 
     ensure_parent_dir_exists(release_zipfile_path)
@@ -156,11 +175,25 @@ def download_release(identifier):
         '-c',  # resume previously incomplete download.
         '-O', release_zipfile_path,
     ]
-    print("pulling down release: {0}".format(" ".join(command)))
 
-    return subprocess.check_call(
+    return check_subprocess_call(
         command,
-        stderr=subprocess.STDOUT,
+        message="pulling down ubuntu release from {0}".format(download_uri),
+    )
+
+
+DOWNLOAD_STATIC_RELEASE_URI_TEMPLATE = "https://github.com/ethereum/solidity/releases/download/{0}/solc-static-linux"
+
+
+def download_static_release(identifier):
+    download_uri = DOWNLOAD_STATIC_RELEASE_URI_TEMPLATE
+
+    # TODO:command
+    assert False, "todo, construct command"
+
+    return check_subprocess_call(
+        command,
+        message="pulling down ubuntu release from {0}".format(download_uri),
     )
 
 
@@ -174,6 +207,8 @@ def extract_release(identifier):
 
     with zipfile.ZipFile(release_zipfile_path) as zipfile_file:
         zipfile_file.extractall(extract_path)
+
+    print("Making `solc` binary executable: `chmod +x {0}`".format(executable_path))
 
     executable_path = get_executable_path(identifier)
     current_st = os.stat(executable_path)
@@ -191,28 +226,50 @@ def install_solc_dependencies(identifier):
     install_dependencies(identifier)
 
 
-def install_solc_from_release(identifier):
-    download_release(identifier)
+def install_solc_from_ubuntu_release_zip(identifier):
+    download_ubuntu_release(identifier)
     extract_release(identifier)
 
     extract_path = get_extract_path(identifier)
     executable_path = get_executable_path(identifier)
-    assert os.path.exists(executable_path)
-
-    print(subprocess.check_output(['ls', os.path.dirname(executable_path)], stderr=subprocess.STDOUT))
+    assert os.path.exists(executable_path), "Executable not found @".format(executable_path)
 
     check_version_command = [executable_path, '--version']
-    print("Checking installed version: {0}".format(" ".join(check_version_command)))
-    version_output = subprocess.check_output(
+
+    version_output = check_subprocess_output(
         check_version_command,
+        message="Checking installed executable version @ {0}".format(executable_path),
         env={'LD_LIBRARY_PATH': extract_path},
     )
+
     print("solc successfully installed at: {0}".format(executable_path))
 
 
+def install_solc_from_static_linux(identifier):
+
+
+V0_4_8 = 'v0.4.8'
+V0_4_11 = 'v0.4.11'
+
+
 SUPPORTED_VERSIONS = {
-    'v0.4.8',
-    'v0.4.11',
+    V0_4_8,
+    V0_4_11,
+}
+
+
+def install_v0_4_8():
+    install_solc_dependencies(V0_4_8)
+    install_solc_from_ubuntu_release_zip(V0_4_8)
+
+
+def install_v0_4_11():
+    install_solc_dependencies(V0_4_11)
+
+
+INSTALL_FUNCTIONS = {
+    V0_4_8:
+    V0_4_11,
 }
 
 
@@ -224,8 +281,8 @@ def install_solc(identifier):
                 ', '.join(sorted(SUPPORTED_VERSIONS)),
             )
         )
-    install_solc_dependencies(identifier)
-    install_solc_from_release(identifier)
+    install_fn = INSTALL_FUNCTIONS[identifier]
+    install_fn()
 
 
 if __name__ == "__main__":
