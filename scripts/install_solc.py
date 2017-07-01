@@ -10,6 +10,7 @@ cd solc-versions/solc-$SOLC_VERSION
 git clone --recurse-submodules --branch v$SOLC_VERSION --depth 50 https://github.com/ethereum/solidity.git
 ./solidity/scripts/install_deps.sh
 """
+import functools
 import os
 import stat
 import subprocess
@@ -279,28 +280,53 @@ def install_solc_from_static_linux(identifier):
     print("solc successfully installed at: {0}".format(executable_path))
 
 
+V0_4_1 = 'v0.4.1'
+V0_4_2 = 'v0.4.2'
+V0_4_6 = 'v0.4.6'
+V0_4_7 = 'v0.4.7'
 V0_4_8 = 'v0.4.8'
+V0_4_9 = 'v0.4.9'
 V0_4_11 = 'v0.4.11'
 
 
 SUPPORTED_VERSIONS = {
+    V0_4_1,
+    V0_4_2,
+    V0_4_6,
+    V0_4_7,
     V0_4_8,
+    V0_4_9,
     V0_4_11,
 }
 
 
-def install_v0_4_8():
-    install_solc_dependencies(V0_4_8)
-    install_solc_from_ubuntu_release_zip(V0_4_8)
+def install_from_ubuntu_release(identifier):
+    install_solc_dependencies(identifier)
+    install_solc_from_ubuntu_release_zip(identifier)
 
 
-def install_v0_4_11():
-    #install_solc_dependencies(V0_4_11)
-    install_solc_from_static_linux(V0_4_11)
+install_v0_4_1 = functools.partial(install_from_ubuntu_release, V0_4_1)
+install_v0_4_2 = functools.partial(install_from_ubuntu_release, V0_4_2)
+install_v0_4_6 = functools.partial(install_from_ubuntu_release, V0_4_6)
+install_v0_4_7 = functools.partial(install_from_ubuntu_release, V0_4_7)
+install_v0_4_8 = functools.partial(install_from_ubuntu_release, V0_4_8)
+install_v0_4_9 = functools.partial(install_from_ubuntu_release, V0_4_9)
+
+
+def install_from_static_linux(identifier):
+    install_solc_from_static_linux(identifier)
+
+
+install_v0_4_11 = functools.partial(install_solc_from_static_linux, V0_4_11)
 
 
 INSTALL_FUNCTIONS = {
+    V0_4_1: install_v0_4_1,
+    V0_4_2: install_v0_4_2,
+    V0_4_6: install_v0_4_6,
+    V0_4_7: install_v0_4_7,
     V0_4_8: install_v0_4_8,
+    V0_4_9: install_v0_4_9,
     V0_4_11: install_v0_4_11,
 }
 

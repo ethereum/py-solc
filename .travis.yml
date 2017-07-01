@@ -8,54 +8,54 @@ env:
   matrix:
     # Standard Library
     # py27
-    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.1
-    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.2
-    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.6
-    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.7
-    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.8
-    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.9
-    #- TOX_ENV=py27-stdlib SOLC_VERSION=0.4.11
+    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.1
+    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.2
+    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.6
+    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.7
+    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.8
+    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.9
+    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.11
     # py34
-    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.1
-    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.2
-    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.6
-    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.7
-    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.8
-    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.9
-    #- TOX_ENV=py34-stdlib SOLC_VERSION=0.4.11
+    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.1
+    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.2
+    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.6
+    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.7
+    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.8
+    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.9
+    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.11
     # py35
-    #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.1
-    #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.2
-    #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.6
-    #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.7
-    #- TOX_ENV=py35-stdlib SOLC_VERSION=0.4.8
+    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.1
+    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.2
+    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.6
+    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.7
     - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.8
+    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.9
     - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.11
     # Gevent
     # py27
-    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.1
-    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.2
-    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.6
-    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.7
-    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.8
-    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.9
-    #- TOX_ENV=py27-gevent SOLC_VERSION=0.4.11
+    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.1
+    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.2
+    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.6
+    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.7
+    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.8
+    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.9
+    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.11
     # py34
-    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.1
-    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.2
-    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.6
-    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.7
-    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.8
-    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.9
-    #- TOX_ENV=py34-gevent SOLC_VERSION=0.4.11
+    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.1
+    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.2
+    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.6
+    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.7
+    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.8
+    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.9
+    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.11
     # py35
-    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.1
-    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.2
-    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.6
-    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.7
-    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.8
-    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.9
-    #- TOX_ENV=py35-gevent SOLC_VERSION=0.4.11
+    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.1
+    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.2
+    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.6
+    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.7
+    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.8
+    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.9
+    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.11
     # linting
     - TOX_ENV=flake8
 cache:
