@@ -295,7 +295,7 @@ def install_v0_4_8():
 
 
 def install_v0_4_11():
-    install_solc_dependencies(V0_4_11)
+    #install_solc_dependencies(V0_4_11)
     install_solc_from_static_linux(V0_4_11)
 
 
