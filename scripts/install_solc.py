@@ -227,9 +227,9 @@ def extract_release(identifier):
     with zipfile.ZipFile(release_zipfile_path) as zipfile_file:
         zipfile_file.extractall(extract_path)
 
-    print("Making `solc` binary executable: `chmod +x {0}`".format(executable_path))
-
     executable_path = get_ubuntu_executable_path(identifier)
+
+    print("Making `solc` binary executable: `chmod +x {0}`".format(executable_path))
     chmod_plus_x(executable_path)
 
 
@@ -254,7 +254,7 @@ def install_solc_from_ubuntu_release_zip(identifier):
 
     check_version_command = [executable_path, '--version']
 
-    version_output = check_subprocess_output(
+    check_subprocess_output(
         check_version_command,
         message="Checking installed executable version @ {0}".format(executable_path),
         env={'LD_LIBRARY_PATH': extract_path},
@@ -271,7 +271,7 @@ def install_solc_from_static_linux(identifier):
 
     check_version_command = [executable_path, '--version']
 
-    version_output = check_subprocess_output(
+    check_subprocess_output(
         check_version_command,
         message="Checking installed executable version @ {0}".format(executable_path),
     )
@@ -300,8 +300,8 @@ def install_v0_4_11():
 
 
 INSTALL_FUNCTIONS = {
-    V0_4_8:
-    V0_4_11,
+    V0_4_8: install_v0_4_8,
+    V0_4_11: install_v0_4_11,
 }
 
 
