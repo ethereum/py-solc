@@ -96,6 +96,11 @@ def check_subprocess_output(command, message=None, stderr=subprocess.STDOUT, **p
     )
 
 
+def chmod_plus_x(executable_path):
+    current_st = os.stat(executable_path)
+    os.chmod(executable_path, current_st.st_mode | stat.S_IEXEC)
+
+
 is_git_available = is_executable_available('git')
 
 
@@ -146,6 +151,14 @@ def get_release_zipfile_path(identifier):
     )
 
 
+def get_static_linux_binary_path(identifier):
+    extract_path = get_extract_path(identifier)
+    return os.path.join(
+        extract_path,
+        'solc',
+    )
+
+
 def get_extract_path(identifier):
     return os.path.join(
         INSTALL_PATH_TEMPLATE.format(identifier),
@@ -153,7 +166,7 @@ def get_extract_path(identifier):
     )
 
 
-def get_executable_path(identifier):
+def get_ubuntu_executable_path(identifier):
     extract_path = get_extract_path(identifier)
     return os.path.join(
         extract_path,
@@ -178,7 +191,7 @@ def download_ubuntu_release(identifier):
 
     return check_subprocess_call(
         command,
-        message="pulling down ubuntu release from {0}".format(download_uri),
+        message="Downloading ubuntu release from {0}".format(download_uri),
     )
 
 
@@ -186,14 +199,20 @@ DOWNLOAD_STATIC_RELEASE_URI_TEMPLATE = "https://github.com/ethereum/solidity/rel
 
 
 def download_static_release(identifier):
-    download_uri = DOWNLOAD_STATIC_RELEASE_URI_TEMPLATE
+    download_uri = DOWNLOAD_STATIC_RELEASE_URI_TEMPLATE.format(identifier)
+    static_binary_path = get_static_linux_binary_path(identifier)
 
-    # TODO:command
-    assert False, "todo, construct command"
+    ensure_parent_dir_exists(static_binary_path)
+
+    command = [
+        "wget", download_uri,
+        '-c',  # resume previously incomplete download.
+        '-O', static_binary_path,
+    ]
 
     return check_subprocess_call(
         command,
-        message="pulling down ubuntu release from {0}".format(download_uri),
+        message="Downloading static linux binary from {0}".format(download_uri),
     )
 
 
@@ -210,9 +229,8 @@ def extract_release(identifier):
 
     print("Making `solc` binary executable: `chmod +x {0}`".format(executable_path))
 
-    executable_path = get_executable_path(identifier)
-    current_st = os.stat(executable_path)
-    os.chmod(executable_path, current_st.st_mode | stat.S_IEXEC)
+    executable_path = get_ubuntu_executable_path(identifier)
+    chmod_plus_x(executable_path)
 
 
 def install_solc_dependencies(identifier):
@@ -231,7 +249,7 @@ def install_solc_from_ubuntu_release_zip(identifier):
     extract_release(identifier)
 
     extract_path = get_extract_path(identifier)
-    executable_path = get_executable_path(identifier)
+    executable_path = get_ubuntu_executable_path(identifier)
     assert os.path.exists(executable_path), "Executable not found @".format(executable_path)
 
     check_version_command = [executable_path, '--version']
@@ -246,6 +264,19 @@ def install_solc_from_ubuntu_release_zip(identifier):
 
 
 def install_solc_from_static_linux(identifier):
+    download_static_release(identifier)
+
+    executable_path = get_static_linux_binary_path(identifier)
+    chmod_plus_x(executable_path)
+
+    check_version_command = [executable_path, '--version']
+
+    version_output = check_subprocess_output(
+        check_version_command,
+        message="Checking installed executable version @ {0}".format(executable_path),
+    )
+
+    print("solc successfully installed at: {0}".format(executable_path))
 
 
 V0_4_8 = 'v0.4.8'
@@ -265,6 +296,7 @@ def install_v0_4_8():
 
 def install_v0_4_11():
     install_solc_dependencies(V0_4_11)
+    install_solc_from_static_linux(V0_4_11)
 
 
 INSTALL_FUNCTIONS = {
