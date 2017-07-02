@@ -1,3 +1,10 @@
+1.1.0
+-----
+
+- Add support for `solc==0.4.11`
+- Add support for `--standard-json` command line argument via `compile_standard` function.
+- Add support for `--allow-paths` command line argument via `allow_paths` kwarg.
+
 1.0.1
 -----
 
