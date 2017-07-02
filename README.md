@@ -35,6 +35,37 @@ pip install py-solc[gevent]
 To enable gevent subprocessing set the environment variable `SOLC_THREADING_BACKEND=gevent`
 
 
+## Standard JSON Compilation
+
+Use the `solc.compile_standard` function to make use the [standard-json] compilation feature.
+
+[Solidity Documentation for Standard JSON input and ouptup format](http://solidity.readthedocs.io/en/develop/using-the-compiler.html#compiler-input-and-output-json-description)
+
+```
+>>> from solc import compile_standard
+>>> compile_standard({
+...     'language': 'Solidity',
+...     'sources': {'Foo.sol': 'content': "...."},
+... })
+{
+    'contracts': {...},
+    'sources': {...},
+    'errors': {...},
+}
+>>> compile_standard({
+...     'language': 'Solidity',
+...     'sources': {'Foo.sol': 'urls': ["/path/to/my/sources/Foo.sol"]},
+... }, allow_paths="/path/to/my/sources")
+{
+    'contracts': {...},
+    'sources': {...},
+    'errors': {...},
+}
+```
+
+
+## Legacy Combined JSON compilation
+
 
 ```python
 >>> from solc import compile_source, compile_files, link_code
