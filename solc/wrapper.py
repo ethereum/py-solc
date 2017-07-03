@@ -12,11 +12,12 @@ from .utils.string import (
 )
 
 
-SOLC_BINARY = os.environ.get('SOLC_BINARY', 'solc')
+def get_solc_binary_path():
+    return os.environ.get('SOLC_BINARY', 'solc')
 
 
 @coerce_return_to_text
-def solc_wrapper(solc_binary=SOLC_BINARY,
+def solc_wrapper(solc_binary=None,
                  stdin=None,
                  help=None,
                  version=None,
@@ -48,6 +49,9 @@ def solc_wrapper(solc_binary=SOLC_BINARY,
                  allow_paths=None,
                  standard_json=None,
                  success_return_code=0):
+    if solc_binary is None:
+        solc_binary = get_solc_binary_path()
+
     command = [solc_binary]
 
     if help:
