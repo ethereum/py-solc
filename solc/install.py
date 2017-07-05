@@ -424,7 +424,10 @@ INSTALL_FUNCTIONS = {
 }
 
 
-def install_solc(platform, identifier):
+def install_solc(identifier, platform=None):
+    if platform is None:
+        platform = sys.platform
+
     if platform not in INSTALL_FUNCTIONS:
         raise ValueError(
             "Installation of solidity is not supported on your platform ({0}). "
@@ -452,4 +455,4 @@ if __name__ == "__main__":
         print("Invocation error.  Should be invoked as `./install_solc.py <release-tag>`")
         sys.exit(1)
 
-    install_solc(sys.platform, identifier)
+    install_solc(identifier)

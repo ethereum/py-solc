@@ -117,6 +117,40 @@ Use the `solc.compile_standard` function to make use the [standard-json] compila
 
 You can use the environment variable `SOLC_BINARY` to set the path to your solc binary.
 
+
+## Installing the `solc` binary
+
+Any of the following versions of `solc` can be installed using `py-solc` on the
+listed platforms.
+
+* `v0.4.1` (linux)
+* `v0.4.2` (linux)
+* `v0.4.6` (linux)
+* `v0.4.7` (linux)
+* `v0.4.8` (linux/osx)
+* `v0.4.9` (linux)
+* `v0.4.11` (linux/osx)
+* `v0.4.12` (linux/osx)
+
+Installation can be done via the command line:
+
+```bash
+$ python -m solc.install v0.4.12
+```
+
+Or from python using the `install_solc` function.
+
+```python
+>>> from solc import install_solc
+>>> install_solc('v0.4.12')
+```
+
+The installed binary can be found under your home directory.  The `v0.4.12`
+binary would be located at `$HOME/.py-solc/solc-v0.4.12/bin/solc`.  Older linux
+installs will also require that you set the environment variable
+`LD_LIBRARY_PATH=$HOME/.py-solc/solc-v0.4.12/bin`
+
+
 ## Import path remappings
 
 `solc` provides path aliasing allow you to have more reusable project configurations.
@@ -130,4 +164,3 @@ compile_files([source_file_path], import_remappings=["zeppeling=/my-zeppelin-che
 ```
 
 [More information about solc import aliasing](http://solidity.readthedocs.io/en/develop/layout-of-source-files.html#paths) 
-
