@@ -19,14 +19,19 @@ import sys
 import zipfile
 
 
-SUPPORTED_VERSIONS = {
-    "0.4.1",
-    "0.4.2",
-    "0.4.6",
-    "0.4.7",
-    "0.4.8",
-    "0.4.11",
-}
+V0_4_1 = 'v0.4.1'
+V0_4_2 = 'v0.4.2'
+V0_4_6 = 'v0.4.6'
+V0_4_7 = 'v0.4.7'
+V0_4_8 = 'v0.4.8'
+V0_4_9 = 'v0.4.9'
+V0_4_11 = 'v0.4.11'
+V0_4_12 = 'v0.4.12'
+
+
+LINUX = 'linux'
+OSX = 'darwin'
+WINDOWS = 'win32'
 
 
 BASE_INSTALL_PATH = os.path.join(
@@ -39,6 +44,17 @@ INSTALL_PATH_TEMPLATE = os.path.join(
     BASE_INSTALL_PATH,
     "solc-{0}",
 )
+
+
+def get_platform():
+    if sys.platform.startswith('linux'):
+        return LINUX
+    elif sys.platform == OSX:
+        return OSX
+    elif sys.platform == WINDOWS:
+        return WINDOWS
+    else:
+        raise KeyError("Unknown platform: {0}".format(sys.platform))
 
 
 def is_executable_available(program):
@@ -280,26 +296,6 @@ def install_solc_from_static_linux(identifier):
     print("solc successfully installed at: {0}".format(executable_path))
 
 
-V0_4_1 = 'v0.4.1'
-V0_4_2 = 'v0.4.2'
-V0_4_6 = 'v0.4.6'
-V0_4_7 = 'v0.4.7'
-V0_4_8 = 'v0.4.8'
-V0_4_9 = 'v0.4.9'
-V0_4_11 = 'v0.4.11'
-
-
-SUPPORTED_VERSIONS = {
-    V0_4_1,
-    V0_4_2,
-    V0_4_6,
-    V0_4_7,
-    V0_4_8,
-    V0_4_9,
-    V0_4_11,
-}
-
-
 def install_from_ubuntu_release(identifier):
     install_solc_dependencies(identifier)
     install_solc_from_ubuntu_release_zip(identifier)
@@ -318,28 +314,41 @@ def install_from_static_linux(identifier):
 
 
 install_v0_4_11 = functools.partial(install_solc_from_static_linux, V0_4_11)
+install_v0_4_12 = functools.partial(install_solc_from_static_linux, V0_4_12)
 
 
 INSTALL_FUNCTIONS = {
-    V0_4_1: install_v0_4_1,
-    V0_4_2: install_v0_4_2,
-    V0_4_6: install_v0_4_6,
-    V0_4_7: install_v0_4_7,
-    V0_4_8: install_v0_4_8,
-    V0_4_9: install_v0_4_9,
-    V0_4_11: install_v0_4_11,
+    LINUX: {
+        V0_4_1: install_v0_4_1,
+        V0_4_2: install_v0_4_2,
+        V0_4_6: install_v0_4_6,
+        V0_4_7: install_v0_4_7,
+        V0_4_8: install_v0_4_8,
+        V0_4_9: install_v0_4_9,
+        V0_4_11: install_v0_4_11,
+        V0_4_12: install_v0_4_12,
+    },
 }
 
 
-def install_solc(identifier):
-    if identifier not in SUPPORTED_VERSIONS:
+def install_solc(platform, identifier):
+    if platform not in INSTALL_FUNCTIONS:
+        raise ValueError(
+            "Installation of solidity is not supported on your platform ({0}). "
+            "Supported platforms are: {1}".format(
+                platform,
+                ', '.join(sorted(INSTALL_FUNCTIONS.keys())),
+            )
+        )
+    elif identifier not in INSTALL_FUNCTIONS[platform]:
         raise ValueError(
             "Installation of solidity=={0} is not supported.  Must be one of {1}".format(
                 identifier,
-                ', '.join(sorted(SUPPORTED_VERSIONS)),
+                ', '.join(sorted(INSTALL_FUNCTIONS[platform].keys())),
             )
         )
-    install_fn = INSTALL_FUNCTIONS[identifier]
+
+    install_fn = INSTALL_FUNCTIONS[platform][identifier]
     install_fn()
 
 
@@ -350,4 +359,4 @@ if __name__ == "__main__":
         print("Invocation error.  Should be invoked as `./install_solc.py <version>`")
         sys.exit(1)
 
-    install_solc(identifier)
+    install_solc(sys.platform, identifier)

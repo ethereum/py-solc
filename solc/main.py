@@ -13,7 +13,7 @@ from .utils.filesystem import (
     is_executable_available,
 )
 from .wrapper import (
-    SOLC_BINARY,
+    get_solc_binary_path,
     solc_wrapper,
 )
 
@@ -23,7 +23,11 @@ import semantic_version
 VERSION_DEV_DATE_MANGLER_RE = re.compile(r'(\d{4})\.0?(\d{1,2})\.0?(\d{1,2})')
 strip_zeroes_from_month_and_day = functools.partial(VERSION_DEV_DATE_MANGLER_RE.sub,
                                                     r'\g<1>.\g<2>.\g<3>')
-is_solc_available = functools.partial(is_executable_available, SOLC_BINARY)
+
+
+def is_solc_available():
+    solc_binary = get_solc_binary_path()
+    return is_executable_available(solc_binary)
 
 
 def get_solc_version_string(**kwargs):
@@ -162,7 +166,24 @@ def compile_standard(input_data, allow_empty=False, **kwargs):
         **kwargs
     )
 
-    return json.loads(stdoutdata)
+    compiler_output = json.loads(stdoutdata)
+    if 'errors' in compiler_output:
+        has_errors = any(error['severity'] == 'error' for error in compiler_output['errors'])
+        if has_errors:
+            error_message = "\n".join(tuple(
+                error['formattedMessage']
+                for error in compiler_output['errors']
+                if error['severity'] == 'error'
+            ))
+            raise SolcError(
+                command,
+                proc.returncode,
+                json.dumps(input_data),
+                stdoutdata,
+                stderrdata,
+                message=error_message,
+            )
+    return compiler_output
 
 
 def link_code(unlinked_data, libraries):

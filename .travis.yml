@@ -1,11 +1,19 @@
 language: python
 python:
   - "3.5"
+os:
+  - linux
+  #- osx
 dist: trusty
 sudo: required
 env:
   global:
+    - SOLC_BASE_INSTALL_PATH=$TRAVIS_BUILD_DIR
   matrix:
+    # Installation Tests
+    - TOX_ENV=py27-installation SOLC_RUN_INSTALL_TESTS=enabled
+    - TOX_ENV=py34-installation SOLC_RUN_INSTALL_TESTS=enabled
+    - TOX_ENV=py35-installation SOLC_RUN_INSTALL_TESTS=enabled
     # Standard Library
     # py27
     - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.1
@@ -15,6 +23,7 @@ env:
     - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.8
     - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.9
     - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.11
+    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.12
     # py34
     - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.1
     - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.2
@@ -23,6 +32,7 @@ env:
     - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.8
     - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.9
     - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.11
+    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.12
     # py35
     - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.1
     - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.2
@@ -31,6 +41,7 @@ env:
     - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.8
     - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.9
     - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.11
+    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.12
     # Gevent
     # py27
     - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.1
@@ -40,6 +51,7 @@ env:
     - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.8
     - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.9
     - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.11
+    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.12
     # py34
     - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.1
     - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.2
@@ -48,6 +60,7 @@ env:
     - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.8
     - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.9
     - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.11
+    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.12
     # py35
     - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.1
     - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.2
@@ -56,18 +69,20 @@ env:
     - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.8
     - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.9
     - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.11
+    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.12
     # linting
     - TOX_ENV=flake8
 cache:
   - pip: true
 before_install:
 install:
-  - if [ -n "$SOLC_VERSION" ]; then python3 $TRAVIS_BUILD_DIR/scripts/install_solc.py $SOLC_VERSION; fi
   - travis_retry pip install setuptools --upgrade
   - travis_retry pip install tox
+  - pip3 install -e .  # install py-solc globally in order to use the solc installation scripts.
 before_script:
-  - if [ -n "$SOLC_VERSION" ]; then export SOLC_BINARY="$TRAVIS_BUILD_DIR/bin/solc-$SOLC_VERSION/bin/solc"; fi
-  - if [ -n "$SOLC_VERSION" ]; then export LD_LIBRARY_PATH="$TRAVIS_BUILD_DIR/bin/solc-$SOLC_VERSION/bin"; fi
+  - if [ -n "$SOLC_VERSION" ]; then python3 -m solc.install $SOLC_VERSION; fi
+  - if [ -n "$SOLC_VERSION" ]; then export SOLC_BINARY="$SOLC_BASE_INSTALL_PATH/solc-$SOLC_VERSION/bin/solc"; fi
+  - if [ -n "$SOLC_VERSION" ]; then export LD_LIBRARY_PATH="$SOLC_BASE_INSTALL_PATH/solc-$SOLC_VERSION/bin"; fi
   - env
   - if [ -n "$SOLC_BINARY" ]; then $SOLC_BINARY --version; fi
 script:
