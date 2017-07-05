@@ -11,67 +11,25 @@ env:
     - SOLC_BASE_INSTALL_PATH=$TRAVIS_BUILD_DIR
   matrix:
     # Installation Tests
-    - TOX_ENV=py27-installation SOLC_RUN_INSTALL_TESTS=enabled
-    - TOX_ENV=py34-installation SOLC_RUN_INSTALL_TESTS=enabled
-    - TOX_ENV=py35-installation SOLC_RUN_INSTALL_TESTS=enabled
-    # Standard Library
-    # py27
-    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.1
-    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.2
-    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.6
-    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.7
-    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.8
-    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.9
-    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.11
-    - TOX_ENV=py27-stdlib SOLC_VERSION=v0.4.12
-    # py34
-    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.1
-    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.2
-    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.6
-    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.7
-    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.8
-    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.9
-    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.11
-    - TOX_ENV=py34-stdlib SOLC_VERSION=v0.4.12
-    # py35
-    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.1
-    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.2
-    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.6
-    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.7
-    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.8
-    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.9
-    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.11
-    - TOX_ENV=py35-stdlib SOLC_VERSION=v0.4.12
-    # Gevent
-    # py27
-    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.1
-    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.2
-    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.6
-    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.7
-    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.8
-    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.9
-    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.11
-    - TOX_ENV=py27-gevent SOLC_VERSION=v0.4.12
-    # py34
-    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.1
-    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.2
-    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.6
-    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.7
-    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.8
-    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.9
-    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.11
-    - TOX_ENV=py34-gevent SOLC_VERSION=v0.4.12
-    # py35
-    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.1
-    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.2
-    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.6
-    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.7
-    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.8
-    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.9
-    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.11
-    - TOX_ENV=py35-gevent SOLC_VERSION=v0.4.12
+    - TOX_POSARGS="-e py27-installation -e py34-installation -e py35-installation" SOLC_RUN_INSTALL_TESTS=enabled
+    # solc 0.4.1
+    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.1
+    # solc 0.4.2
+    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.2
+    # solc 0.4.6
+    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.6
+    # solc 0.4.7
+    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.7
+    # solc 0.4.8
+    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.8
+    # solc 0.4.9
+    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.9
+    # solc 0.4.11
+    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.11
+    # solc 0.4.12
+    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.12
     # linting
-    - TOX_ENV=flake8
+    - TOX_POSARGS="-e flake8"
 cache:
   - pip: true
 before_install:
@@ -86,6 +44,6 @@ before_script:
   - env
   - if [ -n "$SOLC_BINARY" ]; then $SOLC_BINARY --version; fi
 script:
-  - tox -e $TOX_ENV
+  - tox $TOX_POSARGS
 after_script:
-  - cat .tox/$TOX_ENV/log/*.log
+  - cat .tox/$TOX_POSARGS/log/*.log
