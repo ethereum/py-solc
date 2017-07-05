@@ -1,3 +1,9 @@
+1.2.0
+-----
+
+- Add support for `solc==0.4.12`
+- Experimental `solc` installation feature.  Install solc using the `solc.install_solc` function or `python -m solc.install v0.4.12`
+
 1.1.0
 -----
 

@@ -120,6 +120,8 @@ You can use the environment variable `SOLC_BINARY` to set the path to your solc 
 
 ## Installing the `solc` binary
 
+> This feature is experimental and subject to breaking changes.
+
 Any of the following versions of `solc` can be installed using `py-solc` on the
 listed platforms.
 
