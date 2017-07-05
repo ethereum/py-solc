@@ -45,7 +45,7 @@ def test_solc_installation_as_function_call(monkeypatch, tmpdir, platform, versi
     executable_path = get_executable_path(version)
     assert not os.path.exists(executable_path)
 
-    install_solc(platform, version)
+    install_solc(identifier=version, platform=platform)
 
     assert os.path.exists(executable_path)
     monkeypatch.setenv('SOLC_BINARY', executable_path)
