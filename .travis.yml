@@ -29,7 +29,7 @@ env:
     # solc 0.4.12
     - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.12
     # linting
-    - TOX_POSARGS=flake8
+    - TOX_POSARGS="-e flake8"
 cache:
   - pip: true
 before_install:
