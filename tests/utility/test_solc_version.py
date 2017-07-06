@@ -1,5 +1,3 @@
-import re
-
 from solc import get_solc_version
 
 import semantic_version
