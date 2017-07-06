@@ -9,25 +9,28 @@ sudo: required
 env:
   global:
     - SOLC_BASE_INSTALL_PATH=$TRAVIS_BUILD_DIR
+    - ALL_STDLIB_AND_GEVENT_TESTS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent"
   matrix:
     # Installation Tests
-    - TOX_POSARGS="-e py27-installation -e py34-installation -e py35-installation" SOLC_RUN_INSTALL_TESTS=enabled
+    - SOLC_RUN_INSTALL_TESTS=enabled TOX_POSARGS="-e py27-installation -e py34-installation -e py35-installation"
     # solc 0.4.1
-    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.1
+    - SOLC_VERSION=v0.4.1 TOX_POSARGS=$ALL_STDLIB_AND_GEVENT_TESTS 
     # solc 0.4.2
-    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.2
+    - SOLC_VERSION=v0.4.2 TOX_POSARGS=$ALL_STDLIB_AND_GEVENT_TESTS 
     # solc 0.4.6
-    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.6
+    - SOLC_VERSION=v0.4.6 TOX_POSARGS=$ALL_STDLIB_AND_GEVENT_TESTS 
     # solc 0.4.7
-    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.7
+    - SOLC_VERSION=v0.4.7 TOX_POSARGS=$ALL_STDLIB_AND_GEVENT_TESTS 
     # solc 0.4.8
-    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.8
+    - SOLC_VERSION=v0.4.8 TOX_POSARGS=$ALL_STDLIB_AND_GEVENT_TESTS 
     # solc 0.4.9
-    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.9
+    - SOLC_VERSION=v0.4.9 TOX_POSARGS=$ALL_STDLIB_AND_GEVENT_TESTS 
     # solc 0.4.11
-    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.11
+    - SOLC_VERSION=v0.4.11 TOX_POSARGS=$ALL_STDLIB_AND_GEVENT_TESTS 
     # solc 0.4.12
-    - TOX_POSARGS="-e py27-stdlib -e py34-stdlib -e py35-stdlib -e py27-gevent -e py34-gevent -e py35-gevent" SOLC_VERSION=v0.4.12
+    - SOLC_VERSION=v0.4.12 TOX_POSARGS=$ALL_STDLIB_AND_GEVENT_TESTS 
+    # solc 0.4.13
+    - SOLC_VERSION=v0.4.13 TOX_POSARGS=$ALL_STDLIB_AND_GEVENT_TESTS 
     # linting
     - TOX_POSARGS="-e flake8"
 cache:
