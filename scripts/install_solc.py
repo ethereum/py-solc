@@ -359,4 +359,4 @@ if __name__ == "__main__":
         print("Invocation error.  Should be invoked as `./install_solc.py <version>`")
         sys.exit(1)
 
-    install_solc(sys.platform, identifier)
+    install_solc(get_platform(), identifier)

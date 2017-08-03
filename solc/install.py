@@ -431,7 +431,7 @@ INSTALL_FUNCTIONS = {
 
 def install_solc(identifier, platform=None):
     if platform is None:
-        platform = sys.platform
+        platform = get_platform()
 
     if platform not in INSTALL_FUNCTIONS:
         raise ValueError(
