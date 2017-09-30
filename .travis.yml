@@ -105,6 +105,13 @@ matrix:
       env: TOX_POSARGS="-e py34-stdlib -e py34-gevent" SOLC_VERSION=v0.4.16
     - python: "3.5"
       env: TOX_POSARGS="-e py35-stdlib -e py35-gevent" SOLC_VERSION=v0.4.16
+    # solc 0.4.17
+    - python: "2.7"
+      env: TOX_POSARGS="-e py27-stdlib -e py27-gevent" SOLC_VERSION=v0.4.17
+    - python: "3.4"
+      env: TOX_POSARGS="-e py34-stdlib -e py34-gevent" SOLC_VERSION=v0.4.17
+    - python: "3.5"
+      env: TOX_POSARGS="-e py35-stdlib -e py35-gevent" SOLC_VERSION=v0.4.17
 cache:
   - pip: true
 before_install:
