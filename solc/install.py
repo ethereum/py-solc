@@ -23,6 +23,7 @@ V0_4_13 = 'v0.4.13'
 V0_4_14 = 'v0.4.14'
 V0_4_15 = 'v0.4.15'
 V0_4_16 = 'v0.4.16'
+V0_4_17 = 'v0.4.17'
 
 
 LINUX = 'linux'
@@ -396,6 +397,7 @@ install_v0_4_13_linux = functools.partial(install_solc_from_static_linux, V0_4_1
 install_v0_4_14_linux = functools.partial(install_solc_from_static_linux, V0_4_14)
 install_v0_4_15_linux = functools.partial(install_solc_from_static_linux, V0_4_15)
 install_v0_4_16_linux = functools.partial(install_solc_from_static_linux, V0_4_16)
+install_v0_4_17_linux = functools.partial(install_solc_from_static_linux, V0_4_17)
 
 
 def install_from_source(identifier):
@@ -415,6 +417,7 @@ install_v0_4_13_osx = functools.partial(install_from_source, V0_4_13)
 install_v0_4_14_osx = functools.partial(install_from_source, V0_4_14)
 install_v0_4_15_osx = functools.partial(install_from_source, V0_4_15)
 install_v0_4_16_osx = functools.partial(install_from_source, V0_4_16)
+install_v0_4_17_osx = functools.partial(install_from_source, V0_4_17)
 
 
 INSTALL_FUNCTIONS = {
@@ -431,6 +434,7 @@ INSTALL_FUNCTIONS = {
         V0_4_14: install_v0_4_14_linux,
         V0_4_15: install_v0_4_15_linux,
         V0_4_16: install_v0_4_16_linux,
+        V0_4_17: install_v0_4_17_linux,
     },
     OSX: {
         V0_4_8: install_v0_4_8_osx,
@@ -440,6 +444,7 @@ INSTALL_FUNCTIONS = {
         V0_4_14: install_v0_4_14_osx,
         V0_4_15: install_v0_4_15_osx,
         V0_4_16: install_v0_4_16_osx,
+        V0_4_17: install_v0_4_17_osx,
     }
 }
 
