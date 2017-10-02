@@ -13,9 +13,13 @@ def contracts_dir(tmpdir):
     return str(tmpdir.mkdir("contracts"))
 
 
+@pytest.fixture(scope="session")
+def solc_version():
+    return get_solc_version()
+
+
 @pytest.fixture()
-def supported_solc_version():
-    solc_version = get_solc_version()
+def supported_solc_version(solc_version):
     if solc_version not in Spec('>=0.4.1,<=0.4.17,!=0.4.10,!=0.4.3,!=0.4.4,!=0.4.5'):
         raise AssertionError("Unsupported compiler version: {0}".format(solc_version))
 
@@ -28,18 +32,31 @@ def is_new_key_format():
 
 
 @pytest.fixture()
-def FOO_SOURCE(supported_solc_version):
-    return textwrap.dedent('''\
-        pragma solidity ^0.4.0;
+def FOO_SOURCE(supported_solc_version, solc_version):
+    if solc_version in Spec('<0.4.17'):
+        return textwrap.dedent('''\
+            pragma solidity ^0.4.0;
 
-        contract Foo {
-            function Foo() {}
+            contract Foo {
+                function Foo() {}
 
-            function return13() returns (uint) {
-                return 13;
+                function return13() public returns (uint) {
+                    return 13;
+                }
             }
-        }
-        ''')
+            ''')
+    else:
+        return textwrap.dedent('''\
+            pragma solidity ^0.4.17;
+
+            contract Foo {
+                function Foo() public {}
+
+                function return13() public pure returns (uint) {
+                    return 13;
+                }
+            }
+            ''')
 
 
 @pytest.fixture()
@@ -48,7 +65,7 @@ def BAR_SOURCE(supported_solc_version):
         pragma solidity ^0.4.0;
 
         contract Bar {
-            function Bar() {}
+            function Bar() public {}
         }
         ''')
 
@@ -61,9 +78,9 @@ def BAZ_SOURCE(supported_solc_version):
         import "contracts/Bar.sol";
 
         contract Baz is Bar {
-            function Baz() {}
+            function Baz() public {}
 
-            function get_funky() returns (string) {
+            function get_funky() public returns (string) {
                 return "funky";
             }
         }
