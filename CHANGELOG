@@ -1,3 +1,8 @@
+2.0.0
+-----
+
+- Remove gevent support
+
 1.4.0
 -----
 
