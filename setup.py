@@ -1,42 +1,30 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os
-
 from setuptools import (
     setup,
     find_packages,
 )
 
 
-DIR = os.path.dirname(os.path.abspath(__file__))
-
-readme = open(os.path.join(DIR, 'README.md')).read()
-
-
 setup(
     name='py-solc',
     version="1.4.0",
     description="""Python wrapper around the solc binary""",
-    long_description=readme,
+    long_description_markdown_filename='README.md',
     author='Piper Merriam',
     author_email='pipermerriam@gmail.com',
     url='https://github.com/pipermerriam/py-solc',
     include_package_data=True,
     py_modules=['solc'],
+    setup_requires=['setuptools-markdown'],
     install_requires=[
         "semantic_version>=2.6.0",
     ],
-    extras_require={
-        'gevent': [
-            "gevent>=1.1.1,<1.2.0",
-        ],
-    },
     license="MIT",
     zip_safe=False,
     keywords='ethereum solidity solc',
     packages=find_packages(exclude=["tests", "tests.*"]),
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
