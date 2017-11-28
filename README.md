@@ -1,6 +1,6 @@
 # py-solc
 
-[![Build Status](https://travis-ci.org/pipermerriam/py-solc.png)](https://travis-ci.org/pipermerriam/py-solc)
+[![Build Status](https://travis-ci.org/ethereum/py-solc.png)](https://travis-ci.org/ethereum/py-solc)
 [![PyPi version](https://pypip.in/v/py-solc/badge.png)](https://pypi.python.org/pypi/py-solc)
 [![PyPi downloads](https://pypip.in/d/py-solc/badge.png)](https://pypi.python.org/pypi/py-solc)
    
