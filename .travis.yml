@@ -111,6 +111,20 @@ matrix:
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.17
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.17
+    # solc 0.4.18
+    - python: "2.7"
+      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.18
+    - python: "3.4"
+      env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.18
+    - python: "3.5"
+      env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.18
+    # solc 0.4.19
+    - python: "2.7"
+      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.19
+    - python: "3.4"
+      env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.19
+    - python: "3.5"
+      env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.19
 cache:
   - pip: true
 before_install:
