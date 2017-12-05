@@ -191,24 +191,26 @@ listed platforms.
 * `v0.4.15` (linux/osx)
 * `v0.4.16` (linux/osx)
 * `v0.4.17` (linux/osx)
+* `v0.4.18` (linux/osx)
+* `v0.4.19` (linux/osx)
 
 Installation can be done via the command line:
 
 ```bash
-$ python -m solc.install v0.4.17
+$ python -m solc.install v0.4.19
 ```
 
 Or from python using the `install_solc` function.
 
 ```python
 >>> from solc import install_solc
->>> install_solc('v0.4.17')
+>>> install_solc('v0.4.19')
 ```
 
-The installed binary can be found under your home directory.  The `v0.4.17`
-binary would be located at `$HOME/.py-solc/solc-v0.4.17/bin/solc`.  Older linux
+The installed binary can be found under your home directory.  The `v0.4.19`
+binary would be located at `$HOME/.py-solc/solc-v0.4.19/bin/solc`.  Older linux
 installs will also require that you set the environment variable
-`LD_LIBRARY_PATH=$HOME/.py-solc/solc-v0.4.17/bin`
+`LD_LIBRARY_PATH=$HOME/.py-solc/solc-v0.4.19/bin`
 
 
 ## Import path remappings
