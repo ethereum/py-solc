@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/ethereum/py-solc.png)](https://travis-ci.org/ethereum/py-solc)
 [![PyPi version](https://img.shields.io/pypi/v/py-solc.svg)](https://pypi.python.org/pypi/py-solc)
-[![PyPi downloads](https://img.shields.io/pypi/dm/py-solc.svg)](https://pypi.python.org/pypi/py-solc)
    
 
 Python wrapper around the `solc` Solidity compiler.
