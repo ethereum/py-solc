@@ -18,6 +18,7 @@ setup(
     include_package_data=True,
     py_modules=['solc'],
     setup_requires=['setuptools-markdown'],
+    python_requires='>=3.4, <4',
     install_requires=[
         "semantic_version>=2.6.0",
     ],
