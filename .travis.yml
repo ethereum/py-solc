@@ -14,152 +14,152 @@ matrix:
     - python: "3.5"
       env: TOX_POSARGS="-e flake8"
     # installation
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27-installation"
     - python: "3.4"
       env: TOX_POSARGS="-e py34-installation"
     - python: "3.5"
       env: TOX_POSARGS="-e py35-installation"
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36-installation"
     # solc 0.4.1
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.1
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.1
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.1
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.1
     # solc 0.4.2
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.2
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.2
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.2
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.2
     # solc 0.4.6
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.6
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.6
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.6
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.6
     # solc 0.4.7
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.7
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.7
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.7
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.7
     # solc 0.4.8
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.8
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.8
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.8
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.8
     # solc 0.4.9
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.9
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.9
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.9
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.9
     # solc 0.4.11
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.11
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.11
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.11
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.11
     # solc 0.4.12
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.12
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.12
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.12
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.12
     # solc 0.4.13
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.13
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.13
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.13
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.13
     # solc 0.4.14
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.14
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.14
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.14
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.14
     # solc 0.4.15
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.15
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.15
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.15
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.15
     # solc 0.4.16
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.16
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.16
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.16
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.16
     # solc 0.4.17
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.17
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.17
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.17
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.17
     # solc 0.4.18
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.18
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.18
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.18
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.18
     # solc 0.4.19
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.19
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.19
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.19
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.19
     # solc 0.4.20
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.20
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.20
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.20
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.20
     # solc 0.4.21
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.21
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.21
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.21
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.21
     # solc 0.4.22
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.22
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.22
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.22
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.22
     # solc 0.4.23
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.23
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.23
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.23
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.23
     # solc 0.4.24
-    - python: "2.7"
-      env: TOX_POSARGS="-e py27" SOLC_VERSION=v0.4.24
     - python: "3.4"
       env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.24
     - python: "3.5"
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.24
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.24
 cache:
   - pip: true
 before_install:
