@@ -1,3 +1,18 @@
+2.2.0
+-----
+
+- Support for `solc==0.4.20`
+- Support for `solc==0.4.21`
+- Support for `solc==0.4.22`
+- Support for `solc==0.4.23`
+- Support for `solc==0.4.24`
+
+2.1.0
+-----
+
+- Support for `solc==0.4.18`
+- Support for `solc==0.4.19`
+
 2.0.0
 -----
 
