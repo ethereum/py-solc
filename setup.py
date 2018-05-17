@@ -9,7 +9,7 @@ from setuptools import (
 setup(
     name='py-solc',
     # *IMPORTANT*: Don't manually change the version here. Use the 'bumpversion' utility.
-    version='2.1.0',
+    version='2.1.1',
     description="""Python wrapper around the solc binary""",
     long_description_markdown_filename='README.md',
     author='Piper Merriam',
