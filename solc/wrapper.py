@@ -48,7 +48,8 @@ def solc_wrapper(solc_binary=None,
                  formal=None,
                  allow_paths=None,
                  standard_json=None,
-                 success_return_code=0):
+                 success_return_code=0,
+                 evm_version=None):
     if solc_binary is None:
         solc_binary = get_solc_binary_path()
 
@@ -148,6 +149,9 @@ def solc_wrapper(solc_binary=None,
         # solc seems to expects utf-8 from stdin:
         # see Scanner class in Solidity source
         stdin = force_bytes(stdin, 'utf8')
+
+    if evm_version:
+        command.extend(('--evm-version', evm_version))
 
     proc = subprocess.Popen(command,
                             stdin=subprocess.PIPE,
