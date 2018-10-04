@@ -160,6 +160,14 @@ matrix:
       env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.24
     - python: "3.6"
       env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.24
+    # solc 0.4.25
+    - python: "3.4"
+      env: TOX_POSARGS="-e py34" SOLC_VERSION=v0.4.25
+    - python: "3.5"
+      env: TOX_POSARGS="-e py35" SOLC_VERSION=v0.4.25
+    - python: "3.6"
+      env: TOX_POSARGS="-e py36" SOLC_VERSION=v0.4.25
+
 cache:
   - pip: true
 before_install:

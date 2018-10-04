@@ -20,7 +20,7 @@ def solc_version():
 
 @pytest.fixture()
 def supported_solc_version(solc_version):
-    if solc_version not in Spec('>=0.4.1,<=0.4.17,!=0.4.10,!=0.4.3,!=0.4.4,!=0.4.5'):
+    if solc_version not in Spec('>=0.4.1,<=0.4.25,!=0.4.10,!=0.4.3,!=0.4.4,!=0.4.5'):
         raise AssertionError("Unsupported compiler version: {0}".format(solc_version))
 
     return solc_version
